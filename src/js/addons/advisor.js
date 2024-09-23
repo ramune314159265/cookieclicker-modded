@@ -102,8 +102,6 @@ function main() {
 
 	console.log("Done Initializing Advisor!");
 
-	Game.Win("Third-party");
-
 	// for (const key in Game.Upgrades) {
 	// 	const upgrade = Game.Upgrades[key];
 	// 	if (getUpgradeCps(upgrade) === -69) {
