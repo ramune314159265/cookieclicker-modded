@@ -815,7 +815,7 @@ var PlaySound = function (url, vol, pitchVar) {
 	if (!volumeSetting || volume == 0) return 0;
 	if (typeof Sounds[url] === 'undefined') {
 		//sound isn't loaded, cache it
-		Sounds[url] = new Audio(url.indexOf('snd/') == 0 ? (Game.resPath + url) : url);
+		Sounds[url] = new Audio(url.indexOf('sounds/') == 0 ? (Game.resPath + url) : url);
 		Sounds[url].onloadeddata = function (e) { PlaySound(url, vol, pitchVar); }
 		//Sounds[url].load();
 	}
@@ -1056,13 +1056,13 @@ var Game = {};
 			str += '<div style="float:left;width:49%;text-align:left;overflow:hidden;"><b>' + i + '</b>';
 			if (Game.mods[i]) str += ' ' + loc("(loaded)");
 			str += '</div>';
-			str += '<div style="float:right;width:49%;text-align:right;overflow:hidden;">' + loc("%1 char", Game.modSaveData[i].length) + ' <a class="option warning" style="padding:0px 2px;font-size:10px;margin:0px;vertical-align:top;" ' + Game.clickStr + '="Game.deleteModData(\'' + i + '\');PlaySound(\'snd/tick.mp3\');Game.ClosePrompt();Game.CheckModData();">X</a>';
+			str += '<div style="float:right;width:49%;text-align:right;overflow:hidden;">' + loc("%1 char", Game.modSaveData[i].length) + ' <a class="option warning" style="padding:0px 2px;font-size:10px;margin:0px;vertical-align:top;" ' + Game.clickStr + '="Game.deleteModData(\'' + i + '\');PlaySound(\'sounds/tick.mp3\');Game.ClosePrompt();Game.CheckModData();">X</a>';
 			str += '</div>';
 			str += '</div>';
 			modsN++;
 		}
 		if (modsN == 0) str += loc("No mod data present.");
-		else str += '<div><a class="option warning" style="font-size:11px;margin-top:4px;" ' + Game.clickStr + '="Game.deleteAllModData();PlaySound(\'snd/tick.mp3\');Game.ClosePrompt();Game.CheckModData();">' + loc("Delete all") + '</a></div>';
+		else str += '<div><a class="option warning" style="font-size:11px;margin-top:4px;" ' + Game.clickStr + '="Game.deleteAllModData();PlaySound(\'sounds/tick.mp3\');Game.ClosePrompt();Game.CheckModData();">' + loc("Delete all") + '</a></div>';
 		Game.Prompt('<id ModData><h3>' + loc("Mod data") + '</h3><div class="block">' + tinyIcon([16, 5]) + '<div></div>' + loc("These are the mods present in your save data. You may delete some of this data to make your save file smaller.") + '</div><div class="block" style="font-size:11px;">' + str + '</div>', [loc("Back")]);
 	}
 
@@ -2106,7 +2106,7 @@ Game.Launch = function () {
 			Game.recalculateGains = 1;
 		}
 		Game.bakeryNamePrompt = function () {
-			PlaySound('snd/tick.mp3');
+			PlaySound('sounds/tick.mp3');
 			Game.Prompt('<id NameBakery><h3>' + loc("Name your bakery") + '</h3><div class="block" style="text-align:center;">' + loc("What should your bakery's name be?") + '</div><div class="block"><input type="text" style="text-align:center;width:100%;" id="bakeryNameInput" value="' + Game.bakeryName + '"/></div>', [[loc("Confirm"), 'if (l(\'bakeryNameInput\').value.length>0) {Game.bakeryNameSet(l(\'bakeryNameInput\').value);Game.Win(\'What\\\'s in a name\');Game.ClosePrompt();}'], [loc("Random"), 'Game.bakeryNamePromptRandom();'], loc("Cancel")]);
 			l('bakeryNameInput').focus();
 			l('bakeryNameInput').select();
@@ -2337,7 +2337,7 @@ Game.Launch = function () {
 		if (!App) {
 			Game.attachTooltip(l('httpsSwitch'), '<div style="padding:8px;width:350px;text-align:center;font-size:11px;">' + loc("You are currently playing Cookie Clicker on the <b>%1</b> protocol.<br>The <b>%2</b> version uses a different save slot than this one.<br>Click this lock to reload the page and switch to the <b>%2</b> version!", [(Game.https ? 'HTTPS' : 'HTTP'), (Game.https ? 'HTTP' : 'HTTPS')]) + '</div>', 'this');
 			AddEvent(l('httpsSwitch'), 'click', function () {
-				PlaySound('snd/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.75);
+				PlaySound('sounds/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.75);
 				if (location.protocol == 'https:') location.href = 'http:' + window.location.href.substring(window.location.protocol.length);
 				else if (location.protocol == 'http:') location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 			});
@@ -3754,13 +3754,13 @@ Game.Launch = function () {
 					, 'bottom-right') + ' style="opacity:1;float:none;display:block;background-position:' + (-icon[0] * 48) + 'px ' + (-icon[1] * 48) + 'px;"></div>';
 		}
 		Game.PickAscensionMode = function () {
-			PlaySound('snd/tick.mp3');
+			PlaySound('sounds/tick.mp3');
 			Game.tooltip.hide();
 
 			var str = '';
 			for (var i in Game.ascensionModes) {
 				var icon = Game.ascensionModes[i].icon;
-				str += '<div class="crate enabled' + (i == Game.nextAscensionMode ? ' highlighted' : '') + '" id="challengeModeSelector' + i + '" style="opacity:1;float:none;display:inline-block;background-position:' + (-icon[0] * 48) + 'px ' + (-icon[1] * 48) + 'px;" ' + Game.clickStr + '="Game.nextAscensionMode=' + i + ';Game.PickAscensionMode();PlaySound(\'snd/tick.mp3\');Game.choiceSelectorOn=-1;" onMouseOut="l(\'challengeSelectedName\').innerHTML=Game.ascensionModes[Game.nextAscensionMode].dname;l(\'challengeSelectedDesc\').innerHTML=Game.ascensionModes[Game.nextAscensionMode].desc;" onMouseOver="l(\'challengeSelectedName\').innerHTML=Game.ascensionModes[' + i + '].dname;l(\'challengeSelectedDesc\').innerHTML=Game.ascensionModes[' + i + '].desc;"' +
+				str += '<div class="crate enabled' + (i == Game.nextAscensionMode ? ' highlighted' : '') + '" id="challengeModeSelector' + i + '" style="opacity:1;float:none;display:inline-block;background-position:' + (-icon[0] * 48) + 'px ' + (-icon[1] * 48) + 'px;" ' + Game.clickStr + '="Game.nextAscensionMode=' + i + ';Game.PickAscensionMode();PlaySound(\'sounds/tick.mp3\');Game.choiceSelectorOn=-1;" onMouseOut="l(\'challengeSelectedName\').innerHTML=Game.ascensionModes[Game.nextAscensionMode].dname;l(\'challengeSelectedDesc\').innerHTML=Game.ascensionModes[Game.nextAscensionMode].desc;" onMouseOver="l(\'challengeSelectedName\').innerHTML=Game.ascensionModes[' + i + '].dname;l(\'challengeSelectedDesc\').innerHTML=Game.ascensionModes[' + i + '].desc;"' +
 					'></div>';
 			}
 			Game.Prompt('<id PickChallengeMode><h3>' + loc("Select a challenge mode") + '</h3>' +
@@ -3787,7 +3787,7 @@ Game.Launch = function () {
 		Game.UpdateAscensionModePrompt();
 
 		AddEvent(l('ascendButton'), 'click', function () {
-			PlaySound('snd/tick.mp3');
+			PlaySound('sounds/tick.mp3');
 			Game.Reincarnate();
 		});
 
@@ -3800,14 +3800,14 @@ Game.Launch = function () {
 		Game.AscendDuration = Game.fps * 5;//how long the ascend animation is
 		Game.AscendBreakpoint = Game.AscendDuration * 0.5;//at which point the cookie explodes during the ascend animation
 		Game.UpdateAscendIntro = function () {
-			if (Game.AscendTimer == 1) PlaySound('snd/charging.mp3');
-			if (Game.AscendTimer == Math.floor(Game.AscendBreakpoint)) PlaySound('snd/thud.mp3');
+			if (Game.AscendTimer == 1) PlaySound('sounds/charging.mp3');
+			if (Game.AscendTimer == Math.floor(Game.AscendBreakpoint)) PlaySound('sounds/thud.mp3');
 			Game.AscendTimer++;
 			if (Game.AscendTimer > Game.AscendDuration)//end animation and launch ascend screen
 			{
 				PlayCue('ascend');
-				PlayMusicSound('snd/cymbalRev.mp3');
-				if (!App || Game.volumeMusic == 0) PlaySound('snd/choir.mp3');
+				PlayMusicSound('sounds/cymbalRev.mp3');
+				if (!App || Game.volumeMusic == 0) PlaySound('sounds/choir.mp3');
 				Game.EarnHeavenlyChips(Game.cookiesEarned);
 				Game.AscendTimer = 0;
 				Game.OnAscend = 1; Game.removeClass('ascendIntro');
@@ -3822,7 +3822,7 @@ Game.Launch = function () {
 		Game.ReincarnateTimer = 0;//how far we are into the reincarnation animation
 		Game.ReincarnateDuration = Game.fps * 1;//how long the reincarnation animation is
 		Game.UpdateReincarnateIntro = function () {
-			if (Game.ReincarnateTimer == 1) PlaySound('snd/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.75);
+			if (Game.ReincarnateTimer == 1) PlaySound('sounds/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.75);
 			Game.ReincarnateTimer++;
 			if (Game.ReincarnateTimer > Game.ReincarnateDuration)//end animation and launch regular game
 			{
@@ -3862,7 +3862,7 @@ Game.Launch = function () {
 			}
 		}
 		Game.Ascend = function (bypass) {
-			if (!bypass) Game.Prompt('<id Ascend><h3>' + loc("Ascend") + '</h3><div class="block">' + tinyIcon([19, 7]) + '<div class="line"></div>' + loc("Do you REALLY want to ascend?<div class=\"line\"></div>You will lose your progress and start over from scratch.<div class=\"line\"></div>All your cookies will be converted into prestige and heavenly chips.") + '<div class="line"></div>' + (Game.canLumps() ? loc("You will keep your achievements, building levels and sugar lumps.") : loc("You will keep your achievements.")) + '<div class="optionBox"><a class="option smallFancyButton" style="margin:16px;padding:8px 16px;animation:rainbowCycle 5s infinite ease-in-out,pucker 0.2s ease-out;box-shadow:0px 0px 0px 1px #000,0px 0px 1px 2px currentcolor;background:linear-gradient(to bottom,transparent 0%,currentColor 500%);width:auto;text-align:center;" ' + Game.clickStr + '="PlaySound(\'snd/tick.mp3\');Game.ClosePrompt();Game.Ascend(1);" id="promptOption0">' + loc("Ascend") + '</a></div></div>', [[loc("Yes"), 'Game.ClosePrompt();Game.Ascend(1);', 'float:left;display:none;'], [loc("Cancel"), 0, 'float:right']]);
+			if (!bypass) Game.Prompt('<id Ascend><h3>' + loc("Ascend") + '</h3><div class="block">' + tinyIcon([19, 7]) + '<div class="line"></div>' + loc("Do you REALLY want to ascend?<div class=\"line\"></div>You will lose your progress and start over from scratch.<div class=\"line\"></div>All your cookies will be converted into prestige and heavenly chips.") + '<div class="line"></div>' + (Game.canLumps() ? loc("You will keep your achievements, building levels and sugar lumps.") : loc("You will keep your achievements.")) + '<div class="optionBox"><a class="option smallFancyButton" style="margin:16px;padding:8px 16px;animation:rainbowCycle 5s infinite ease-in-out,pucker 0.2s ease-out;box-shadow:0px 0px 0px 1px #000,0px 0px 1px 2px currentcolor;background:linear-gradient(to bottom,transparent 0%,currentColor 500%);width:auto;text-align:center;" ' + Game.clickStr + '="PlaySound(\'sounds/tick.mp3\');Game.ClosePrompt();Game.Ascend(1);" id="promptOption0">' + loc("Ascend") + '</a></div></div>', [[loc("Yes"), 'Game.ClosePrompt();Game.Ascend(1);', 'float:left;display:none;'], [loc("Cancel"), 0, 'float:right']]);
 			else {
 				Game.Notify(loc("Ascending"), loc("So long, cookies."), [20, 7], 4);
 				Game.OnAscend = 0; Game.removeClass('ascending');
@@ -4007,7 +4007,7 @@ Game.Launch = function () {
 				}
 			}(justBought));
 			for (var i = 0; i < toPop.length; i++) {
-				setTimeout(function () { PlaySound('snd/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.5); }, (0.2 + i * 0.1) * 1000);
+				setTimeout(function () { PlaySound('sounds/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.5); }, (0.2 + i * 0.1) * 1000);
 			}
 			str += '<div class="crate upgrade heavenly enabled" style="position:absolute;left:-30px;top:-30px;opacity:0.8;pointer-events:none;transform:scale(1.3);background:transparent;"></div>';
 			str += '<div class="crateBox" style="filter:none;-webkit-filter:none;">';//chrome is still bad at these
@@ -4189,7 +4189,7 @@ Game.Launch = function () {
 				var rect = l('lumpsIcon2').getBounds(); Game.SparkleAt((rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2 - 24 + 32 - TopBarOffset);
 				if (total > 0) Game.Popup('<small>+' + loc("%1 sugar lump", LBeautify(total)) + '</small>', (rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2 - 48);
 				else Game.Popup('<small>' + loc("Botched harvest!") + '</small>', (rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2 - 48);
-				PlaySound('snd/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.75);
+				PlaySound('sounds/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.75);
 			}
 			Game.computeLumpTimes();
 		}
@@ -4238,7 +4238,7 @@ Game.Launch = function () {
 			return function () {
 				if (!free && Game.lumps < n) return false;
 				if (!free && Game.prefs.askLumps) {
-					PlaySound('snd/tick.mp3');
+					PlaySound('sounds/tick.mp3');
 					Game.promptConfirmFunc = func;//bit dumb
 					Game.Prompt('<id SpendLump><div class="icon" style="background:url(' + Game.resPath + 'images/icons.png?v=' + Game.version + ');float:left;margin-left:-8px;margin-top:-8px;background-position:' + (-29 * 48) + 'px ' + (-14 * 48) + 'px;"></div><div style="margin:16px 8px;">' + loc("Do you want to spend %1 to %2?", ['<b>' + loc("%1 sugar lump", LBeautify(n)) + '</b>', str]) + '</div>', [[loc("Yes"), 'Game.lumps-=' + n + ';Game.promptConfirmFunc();Game.promptConfirmFunc=0;Game.recalculateGains=1;Game.ClosePrompt();'], loc("No")]);
 					return false;
@@ -4409,8 +4409,8 @@ Game.Launch = function () {
 		Game.BigCookieSizeT = 1;
 		Game.cookieClickSound = Math.floor(Math.random() * 7) + 1;
 		Game.playCookieClickSound = function () {
-			if (Game.prefs.cookiesound) PlaySound('snd/clickb' + (Game.cookieClickSound) + '.mp3', 0.5);
-			else PlaySound('snd/click' + (Game.cookieClickSound) + '.mp3', 0.5);
+			if (Game.prefs.cookiesound) PlaySound('sounds/clickb' + (Game.cookieClickSound) + '.mp3', 0.5);
+			else PlaySound('sounds/click' + (Game.cookieClickSound) + '.mp3', 0.5);
 			Game.cookieClickSound += Math.floor(Math.random() * 4) + 1;
 			if (Game.cookieClickSound > 7) Game.cookieClickSound -= 7;
 		}
@@ -4524,7 +4524,7 @@ Game.Launch = function () {
 		AddEvent(window, 'keyup', function (e) {
 			Game.lastActivity = Game.time;
 			if (e.keyCode == 27) {
-				if (Game.promptOn && !Game.promptNoClose) { Game.ClosePrompt(); PlaySound('snd/tickOff.mp3'); }
+				if (Game.promptOn && !Game.promptNoClose) { Game.ClosePrompt(); PlaySound('sounds/tickOff.mp3'); }
 				if (Game.AscendTimer > 0) Game.AscendTimer = Game.AscendDuration;
 			}//esc closes prompt
 			if (Game.promptOn) {
@@ -5227,10 +5227,10 @@ Game.Launch = function () {
 					//sparkle and kill the shimmer
 					Game.SparkleAt(me.x + 48, me.y + 48);
 					if (choice == 'cookie storm drop') {
-						if (Game.prefs.cookiesound) PlaySound('snd/clickb' + Math.floor(Math.random() * 7 + 1) + '.mp3', 0.75);
-						else PlaySound('snd/click' + Math.floor(Math.random() * 7 + 1) + '.mp3', 0.75);
+						if (Game.prefs.cookiesound) PlaySound('sounds/clickb' + Math.floor(Math.random() * 7 + 1) + '.mp3', 0.75);
+						else PlaySound('sounds/click' + Math.floor(Math.random() * 7 + 1) + '.mp3', 0.75);
 					}
-					else PlaySound('snd/shimmerClick.mp3');
+					else PlaySound('sounds/shimmerClick.mp3');
 					me.die();
 				},
 				missFunc: function (me) {
@@ -5305,7 +5305,7 @@ Game.Launch = function () {
 				reset: function () {
 				},
 				initFunc: function (me) {
-					if (!this.spawned && Game.chimeType != 0 && Game.ascensionMode != 1) PlaySound('snd/jingle.mp3');
+					if (!this.spawned && Game.chimeType != 0 && Game.ascensionMode != 1) PlaySound('sounds/jingle.mp3');
 
 					me.x = -128;
 					me.y = Math.floor(Math.random() * Math.max(0, Game.bounds.bottom - Game.bounds.top - 256) + Game.bounds.top + 128) - 128;
@@ -5380,7 +5380,7 @@ Game.Launch = function () {
 
 					//sparkle and kill the shimmer
 					Game.SparkleAt(Game.mouseX, Game.mouseY);
-					PlaySound('snd/jingleClick.mp3');
+					PlaySound('sounds/jingleClick.mp3');
 					me.die();
 				},
 				missFunc: function (me) {
@@ -5717,13 +5717,13 @@ Game.Launch = function () {
 					var me = Game.Notes[i];
 					var pic = '';
 					if (me.pic != '') pic = '<div class="icon" style="' + writeIcon(me.pic) + '"></div>';
-					str = '<div id="note-' + me.id + '" ' + (me.tooltip ? Game.getDynamicTooltip(me.tooltip, 'this', true) + ' ' : '') + 'class="framed note ' + (me.pic != '' ? 'haspic' : 'nopic') + ' ' + (me.desc != '' ? 'hasdesc' : 'nodesc') + '"><div class="close" onclick="PlaySound(\'snd/tick.mp3\');Game.CloseNote(' + me.id + ');">x</div>' + pic + '<div class="text"><h3>' + me.title + '</h3>' + (me.desc != '' ? '<div class="line"></div><h5>' + me.desc + '</h5>' : '') + '</div></div>' + str;
+					str = '<div id="note-' + me.id + '" ' + (me.tooltip ? Game.getDynamicTooltip(me.tooltip, 'this', true) + ' ' : '') + 'class="framed note ' + (me.pic != '' ? 'haspic' : 'nopic') + ' ' + (me.desc != '' ? 'hasdesc' : 'nodesc') + '"><div class="close" onclick="PlaySound(\'sounds/tick.mp3\');Game.CloseNote(' + me.id + ');">x</div>' + pic + '<div class="text"><h3>' + me.title + '</h3>' + (me.desc != '' ? '<div class="line"></div><h5>' + me.desc + '</h5>' : '') + '</div></div>' + str;
 					remaining--;
 				}
 			}
 			if (remaining > 0) str = '<div class="remaining">' + loc("+%1 more notification.", LBeautify(remaining)) + '</div>' + str;
 			if (Game.Notes.length > 1) {
-				str += '<div class="framed close sidenote" onclick="PlaySound(\'snd/tick.mp3\');Game.CloseNotes();">x</div>';
+				str += '<div class="framed close sidenote" onclick="PlaySound(\'sounds/tick.mp3\');Game.CloseNotes();">x</div>';
 			}
 			Game.noteL.innerHTML = str;
 			for (var i in Game.Notes) {
@@ -5777,7 +5777,7 @@ Game.Launch = function () {
 		PROMPT
 		=======================================================================================*/
 		Game.darkenL = l('darken');
-		AddEvent(Game.darkenL, 'click', function () { if (Game.promptNoClose) { } else { Game.Click = 0; PlaySound('snd/tickOff.mp3'); Game.ClosePrompt(); } });
+		AddEvent(Game.darkenL, 'click', function () { if (Game.promptNoClose) { } else { Game.Click = 0; PlaySound('sounds/tickOff.mp3'); Game.ClosePrompt(); } });
 		Game.promptL = l('promptContent');
 		Game.promptAnchorL = l('promptAnchor');
 		Game.promptWrapL = l('prompt');
@@ -5812,9 +5812,9 @@ Game.Launch = function () {
 				if (options[i] == 'br')//just a linebreak
 				{ opts += '<br>'; }
 				else {
-					if (typeof options[i] == 'string') options[i] = [options[i], 'PlaySound(\'snd/tickOff.mp3\');Game.ClosePrompt();'];
-					else if (!options[i][1]) options[i] = [options[i][0], 'PlaySound(\'snd/tickOff.mp3\');Game.ClosePrompt();', options[i][2]];
-					else options[i][1] = 'PlaySound(\'snd/tick.mp3\');' + options[i][1];
+					if (typeof options[i] == 'string') options[i] = [options[i], 'PlaySound(\'sounds/tickOff.mp3\');Game.ClosePrompt();'];
+					else if (!options[i][1]) options[i] = [options[i][0], 'PlaySound(\'sounds/tickOff.mp3\');Game.ClosePrompt();', options[i][2]];
+					else options[i][1] = 'PlaySound(\'sounds/tick.mp3\');' + options[i][1];
 					options[i][1] = options[i][1].replace(/'/g, '&#39;').replace(/"/g, '&#34;');
 					opts += '<a id="promptOption' + i + '" class="option" ' + (options[i][2] ? 'style="' + options[i][2] + '" ' : '') + '' + Game.clickStr + '="' + options[i][1] + '">' + options[i][0] + '</a>';
 					Game.promptOptionsN++;
@@ -5868,7 +5868,7 @@ Game.Launch = function () {
 		Game.WritePrefButton = function (prefName, button, on, off, callback, invert) {
 			var invert = invert ? 1 : 0;
 			if (!callback) callback = '';
-			callback += 'PlaySound(\'snd/tick.mp3\');';
+			callback += 'PlaySound(\'sounds/tick.mp3\');';
 			return '<a class="smallFancyButton prefButton option' + ((Game.prefs[prefName] ^ invert) ? '' : ' off') + '" id="' + button + '" ' + Game.clickStr + '="Game.Toggle(\'' + prefName + '\',\'' + button + '\',\'' + on + '\',\'' + off + '\',\'' + invert + '\');' + callback + '">' + (Game.prefs[prefName] ? on : off) + '</a>';
 		}
 		Game.Toggle = function (prefName, button, on, off, invert) {
@@ -5904,7 +5904,7 @@ Game.Launch = function () {
 
 		Game.WriteSlider = function (slider, leftText, rightText, startValueFunction, callback) {
 			if (!callback) callback = '';
-			return '<div class="sliderBox"><div style="float:left;" class="smallFancyButton">' + leftText + '</div><div style="float:right;" class="smallFancyButton" id="' + slider + 'RightText">' + rightText.replace('[$]', startValueFunction()) + '</div><input class="slider" style="clear:both;" type="range" min="0" max="100" step="1" value="' + startValueFunction() + '" onchange="' + callback + '" oninput="' + callback + '" onmouseup="PlaySound(\'snd/tick.mp3\');" id="' + slider + '"/></div>';
+			return '<div class="sliderBox"><div style="float:left;" class="smallFancyButton">' + leftText + '</div><div style="float:right;" class="smallFancyButton" id="' + slider + 'RightText">' + rightText.replace('[$]', startValueFunction()) + '</div><input class="slider" style="clear:both;" type="range" min="0" max="100" step="1" value="' + startValueFunction() + '" onchange="' + callback + '" oninput="' + callback + '" onmouseup="PlaySound(\'sounds/tick.mp3\');" id="' + slider + '"/></div>';
 		}
 
 		Game.onPanel = 'Left';
@@ -5931,8 +5931,8 @@ Game.Launch = function () {
 			l('statsButton').className = (Game.onMenu == 'stats') ? 'panelButton selected' : 'panelButton';
 			l('logButton').className = (Game.onMenu == 'log') ? 'panelButton selected' : 'panelButton';
 
-			if (Game.onMenu == '') PlaySound('snd/clickOff2.mp3');
-			else PlaySound('snd/clickOn2.mp3');
+			if (Game.onMenu == '') PlaySound('sounds/clickOff2.mp3');
+			else PlaySound('sounds/clickOn2.mp3');
 
 			Game.UpdateMenu();
 
@@ -6003,7 +6003,7 @@ Game.Launch = function () {
 			}
 			return '';
 		}
-		Game.ClickTinyCookie = function () { if (!Game.HasAchiev('Tiny cookie')) { PlaySound('snd/tick.mp3'); Game.Win('Tiny cookie'); } }
+		Game.ClickTinyCookie = function () { if (!Game.HasAchiev('Tiny cookie')) { PlaySound('sounds/tick.mp3'); Game.Win('Tiny cookie'); } }
 
 		Game.setVolume = function (what) {
 			Game.volume = what;
@@ -6038,7 +6038,7 @@ Game.Launch = function () {
 					return function () {
 						if (true)//lang!=locId)
 						{
-							PlaySound('snd/tick.mp3');
+							PlaySound('sounds/tick.mp3');
 							localStorageSet('CookieClickerLang', lang);
 							Game.toSave = true;
 							Game.toReload = true;
@@ -6047,7 +6047,7 @@ Game.Launch = function () {
 				}(i));
 				AddEvent(l('langSelect-' + i), 'mouseover', function (lang) {
 					return function () {
-						PlaySound('snd/smallTick.mp3', 0.75);
+						PlaySound('sounds/smallTick.mp3', 0.75);
 						l('languageSelectHeader').innerHTML = Langs[lang].changeLanguage;
 					};
 				}(i));
@@ -6071,18 +6071,18 @@ Game.Launch = function () {
 					'<div class="title">' + loc("General") +
 					((Game.Has('Wrapping paper') && Game.ascensionMode == 0) ? ('<div id="giftStuff" class="optionBox" style="float:right;text-align:right;clear:both;overflow:hidden;margin-top:-32px;' + ((Game.cookies >= 1000000000 && !Game.hasBuff('Gifted out')) ? '' : 'opacity:0.5;') + '">' +
 						'<div class="icon" style="display:inline-block;float:right;margin:-4px;width:48px;height:48px;position:relative;background-position:' + (-34 * 48) + 'px ' + (-6 * 48) + 'px;"></div><br>' +
-						'<a class="option" ' + Game.clickStr + '="if (Game.cookies<1000000000 || Game.hasBuff(\'Gifted out\')){return false;}PlaySound(\'snd/tick.mp3\');Game.promptGiftSend();" style="position:relative;margin:0px;margin-bottom:2px;float:right;" ' + Game.getTooltip('<div style="min-width:200px;text-align:center;font-size:11px;" id="tooltipGiftRedeem"><b>' + loc("Send a gift") + '</b>' + (Game.hasBuff('Gifted out') ? '<br>' + loc("You've already sent or redeemed a gift recently.") : '') + (Game.cookies < 1000000000 ? '<br>' + loc("You need at least %1 cookies in bank to send and receive gifts.", loc("%1 cookie", LBeautify(1000000000))) : '') + '</div>', 'this') + '>' + loc("Send") + '</a><br>' +
-						'<a class="option" ' + Game.clickStr + '="if (Game.cookies<1000000000 || Game.hasBuff(\'Gifted out\')){return false;}PlaySound(\'snd/tick.mp3\');Game.promptGiftRedeem();" style="position:relative;margin:0px;float:right;" ' + Game.getTooltip('<div style="min-width:200px;text-align:center;font-size:11px;" id="tooltipGiftRedeem"><b>' + loc("Redeem a gift") + '</b>' + (Game.hasBuff('Gifted out') ? '<br>' + loc("You've already sent or redeemed a gift recently.") : '') + (Game.cookies < 1000000000 ? '<br>' + loc("You need at least %1 cookies in bank to send and receive gifts.", loc("%1 cookie", LBeautify(1000000000))) : '') + '</div>', 'this') + '>' + loc("Redeem") + '</a>' +
+						'<a class="option" ' + Game.clickStr + '="if (Game.cookies<1000000000 || Game.hasBuff(\'Gifted out\')){return false;}PlaySound(\'sounds/tick.mp3\');Game.promptGiftSend();" style="position:relative;margin:0px;margin-bottom:2px;float:right;" ' + Game.getTooltip('<div style="min-width:200px;text-align:center;font-size:11px;" id="tooltipGiftRedeem"><b>' + loc("Send a gift") + '</b>' + (Game.hasBuff('Gifted out') ? '<br>' + loc("You've already sent or redeemed a gift recently.") : '') + (Game.cookies < 1000000000 ? '<br>' + loc("You need at least %1 cookies in bank to send and receive gifts.", loc("%1 cookie", LBeautify(1000000000))) : '') + '</div>', 'this') + '>' + loc("Send") + '</a><br>' +
+						'<a class="option" ' + Game.clickStr + '="if (Game.cookies<1000000000 || Game.hasBuff(\'Gifted out\')){return false;}PlaySound(\'sounds/tick.mp3\');Game.promptGiftRedeem();" style="position:relative;margin:0px;float:right;" ' + Game.getTooltip('<div style="min-width:200px;text-align:center;font-size:11px;" id="tooltipGiftRedeem"><b>' + loc("Redeem a gift") + '</b>' + (Game.hasBuff('Gifted out') ? '<br>' + loc("You've already sent or redeemed a gift recently.") : '') + (Game.cookies < 1000000000 ? '<br>' + loc("You need at least %1 cookies in bank to send and receive gifts.", loc("%1 cookie", LBeautify(1000000000))) : '') + '</div>', 'this') + '>' + loc("Redeem") + '</a>' +
 						'</div>') : '') +
 					'</div>' +
-					'<div class="listing" style="text-align:center;"><div style="display:inline-block;padding:2px 8px;opacity:0.75;font-size:12px;vertical-align:middle;pointer-events:none;" class="smallFancyButton">' + loc("Language: %1", '<b>' + Langs[locId].name + '</b>') + '</div><div class="icon" style="pointer-events:none;vertical-align:middle;display:inline-block;background-position:' + (-30 * 48) + 'px ' + (-29 * 48) + 'px;transform:scale(0.5);margin:-16px -12px;"></div><a style="font-size:15px;text-align:center;width:auto;min-width:130px;" class="option smallFancyButton" id="changeLanguageOption" ' + Game.clickStr + '="PlaySound(\'snd/tick.mp3\');Game.showLangSelection();">' + (!EN ? 'Change language<div class="line"></div>' : '') + loc("Change language") + '</a><div style="clear:both;text-align:right;padding-bottom:2px;"></div></div>' +
-					(App ? '<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="PlaySound(\'snd/tick.mp3\');Game.toSave=true;Game.toQuit=true;">' + loc("Save & Quit") + '</a></div>' : '') +
-					'<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="Game.toSave=true;PlaySound(\'snd/tick.mp3\');">' + loc("Save") + '</a><label>' + loc("Save manually (the game autosaves every 60 seconds; shortcut: ctrl+S)") + '</label></div>' +
-					'<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="Game.ExportSave();PlaySound(\'snd/tick.mp3\');">' + loc("Export save") + '</a><a class="option smallFancyButton" ' + Game.clickStr + '="Game.ImportSave();PlaySound(\'snd/tick.mp3\');">' + loc("Import save") + '</a><label>' + loc("You can use this to backup your save or to transfer it to another computer (shortcut for import: ctrl+O)") + '</label></div>' +
-					(!App ? ('<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="Game.FileSave();PlaySound(\'snd/tick.mp3\');">' + loc("Save to file") + '</a><a class="option smallFancyButton" style="position:relative;"><input id="FileLoadInput" type="file" style="cursor:pointer;opacity:0;position:absolute;left:0px;top:0px;width:100%;height:100%;" onchange="Game.FileLoad(event);" ' + Game.clickStr + '="PlaySound(\'snd/tick.mp3\');"/>' + loc("Load from file") + '</a><label>' + loc("Use this to keep backups on your computer") + '</label></div>') : '') +
-					'<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="Game.ServerLoad();PlaySound(\'snd/tick.mp3\');">' + loc("サーバーから読み込む") + '</a><label>' + loc("指定されたURLからデータを読み込みます") + '</label></div>' +
+					'<div class="listing" style="text-align:center;"><div style="display:inline-block;padding:2px 8px;opacity:0.75;font-size:12px;vertical-align:middle;pointer-events:none;" class="smallFancyButton">' + loc("Language: %1", '<b>' + Langs[locId].name + '</b>') + '</div><div class="icon" style="pointer-events:none;vertical-align:middle;display:inline-block;background-position:' + (-30 * 48) + 'px ' + (-29 * 48) + 'px;transform:scale(0.5);margin:-16px -12px;"></div><a style="font-size:15px;text-align:center;width:auto;min-width:130px;" class="option smallFancyButton" id="changeLanguageOption" ' + Game.clickStr + '="PlaySound(\'sounds/tick.mp3\');Game.showLangSelection();">' + (!EN ? 'Change language<div class="line"></div>' : '') + loc("Change language") + '</a><div style="clear:both;text-align:right;padding-bottom:2px;"></div></div>' +
+					(App ? '<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="PlaySound(\'sounds/tick.mp3\');Game.toSave=true;Game.toQuit=true;">' + loc("Save & Quit") + '</a></div>' : '') +
+					'<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="Game.toSave=true;PlaySound(\'sounds/tick.mp3\');">' + loc("Save") + '</a><label>' + loc("Save manually (the game autosaves every 60 seconds; shortcut: ctrl+S)") + '</label></div>' +
+					'<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="Game.ExportSave();PlaySound(\'sounds/tick.mp3\');">' + loc("Export save") + '</a><a class="option smallFancyButton" ' + Game.clickStr + '="Game.ImportSave();PlaySound(\'sounds/tick.mp3\');">' + loc("Import save") + '</a><label>' + loc("You can use this to backup your save or to transfer it to another computer (shortcut for import: ctrl+O)") + '</label></div>' +
+					(!App ? ('<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="Game.FileSave();PlaySound(\'sounds/tick.mp3\');">' + loc("Save to file") + '</a><a class="option smallFancyButton" style="position:relative;"><input id="FileLoadInput" type="file" style="cursor:pointer;opacity:0;position:absolute;left:0px;top:0px;width:100%;height:100%;" onchange="Game.FileLoad(event);" ' + Game.clickStr + '="PlaySound(\'sounds/tick.mp3\');"/>' + loc("Load from file") + '</a><label>' + loc("Use this to keep backups on your computer") + '</label></div>') : '') +
+					'<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="Game.ServerLoad();PlaySound(\'sounds/tick.mp3\');">' + loc("サーバーから読み込む") + '</a><label>' + loc("指定されたURLからデータを読み込みます") + '</label></div>' +
 
-					'<div class="listing" style="text-align:right;"><label>' + loc("Delete all your progress, including your achievements") + '</label><a class="option smallFancyButton warning" ' + Game.clickStr + '="Game.HardReset();PlaySound(\'snd/tick.mp3\');">' + loc("Wipe save") + '</a></div>' +
+					'<div class="listing" style="text-align:right;"><label>' + loc("Delete all your progress, including your achievements") + '</label><a class="option smallFancyButton warning" ' + Game.clickStr + '="Game.HardReset();PlaySound(\'sounds/tick.mp3\');">' + loc("Wipe save") + '</a></div>' +
 
 					'</div>' +
 					'</div>' +
@@ -6121,7 +6121,7 @@ Game.Launch = function () {
 					Game.WritePrefButton('screenreader', 'screenreaderButton', loc("Screen reader mode") + ON, loc("Screen reader mode") + OFF, 'Game.toSave=true;Game.toReload=true;') + '<label>(' + loc("allows optimizations for screen readers; game will reload") + ')</label><br>' +
 					'</div>' +
 					//'<div class="listing">'+Game.WritePrefButton('autosave','autosaveButton','Autosave ON','Autosave OFF')+'</div>'+
-					(!App ? '<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="Game.CheckModData();PlaySound(\'snd/tick.mp3\');">' + loc("Check mod data") + '</a><label>(' + loc("view and delete save data created by mods") + ')</label></div>' : '') +
+					(!App ? '<div class="listing"><a class="option smallFancyButton" ' + Game.clickStr + '="Game.CheckModData();PlaySound(\'sounds/tick.mp3\');">' + loc("Check mod data") + '</a><label>(' + loc("view and delete save data created by mods") + ')</label></div>' : '') +
 
 					'</div>' +
 					'</div>' +
@@ -6143,7 +6143,7 @@ Game.Launch = function () {
 			else if (Game.onMenu == 'log') {
 				//str+=replaceAll('[bakeryName]',Game.bakeryName,Game.updateLog);
 				str += Game.updateLog;
-				if (!Game.HasAchiev('Olden days')) str += '<div id="oldenDays" style="text-align:right;width:100%;"><div ' + Game.clickStr + '="Game.SparkleAt(Game.mouseX,Game.mouseY);PlaySound(\'snd/tick.mp3\');PlaySound(\'snd/shimmerClick.mp3\');Game.Win(\'Olden days\');Game.UpdateMenu();" class="icon" style="display:inline-block;transform:scale(0.5);cursor:pointer;width:48px;height:48px;background-position:' + (-12 * 48) + 'px ' + (-3 * 48) + 'px;"></div></div>';
+				if (!Game.HasAchiev('Olden days')) str += '<div id="oldenDays" style="text-align:right;width:100%;"><div ' + Game.clickStr + '="Game.SparkleAt(Game.mouseX,Game.mouseY);PlaySound(\'sounds/tick.mp3\');PlaySound(\'sounds/shimmerClick.mp3\');Game.Win(\'Olden days\');Game.UpdateMenu();" class="icon" style="display:inline-block;transform:scale(0.5);cursor:pointer;width:48px;height:48px;background-position:' + (-12 * 48) + 'px ' + (-3 * 48) + 'px;"></div></div>';
 			}
 			else if (Game.onMenu == 'stats') {
 				var buildingsOwned = 0;
@@ -6412,7 +6412,7 @@ Game.Launch = function () {
 		AddEvent(l('prefsButton'), 'click', function () { Game.ShowMenu('prefs'); });
 		AddEvent(l('statsButton'), 'click', function () { Game.ShowMenu('stats'); });
 		AddEvent(l('logButton'), 'click', function () { Game.ShowMenu('log'); });
-		AddEvent(l('legacyButton'), 'click', function () { PlaySound('snd/tick.mp3'); Game.Ascend(); });
+		AddEvent(l('legacyButton'), 'click', function () { PlaySound('sounds/tick.mp3'); Game.Ascend(); });
 		Game.ascendMeter = l('ascendMeter');
 		Game.ascendNumber = l('ascendNumber');
 
@@ -7049,7 +7049,7 @@ Game.Launch = function () {
 			else if (Game.TickerClicks >= 50) { Game.Win('Tabloid addiction'); }
 
 			if (Game.TickerEffect && Game.TickerEffect.type == 'fortune') {
-				PlaySound('snd/fortune.mp3', 1);
+				PlaySound('sounds/fortune.mp3', 1);
 				Game.SparkleAt(Game.mouseX, Game.mouseY);
 				var effect = Game.TickerEffect.sub;
 				if (effect == 'fortuneGC') {
@@ -7253,7 +7253,7 @@ Game.Launch = function () {
 						success = 1;
 					}
 				}
-				if (success) { PlaySound('snd/buy' + choose([1, 2, 3, 4]) + '.mp3', 0.75); this.refresh(); }
+				if (success) { PlaySound('sounds/buy' + choose([1, 2, 3, 4]) + '.mp3', 0.75); this.refresh(); }
 				//if (moni>0 && amount>1) Game.Notify(this.name,'Bought <b>'+bought+'</b> for '+Beautify(moni)+' cookies','',2);
 			}
 			this.sell = function (amount, bypass) {
@@ -7307,7 +7307,7 @@ Game.Launch = function () {
 						}
 					}
 				}
-				if (success) { PlaySound('snd/sell' + choose([1, 2, 3, 4]) + '.mp3', 0.75); this.refresh(); }
+				if (success) { PlaySound('sounds/sell' + choose([1, 2, 3, 4]) + '.mp3', 0.75); this.refresh(); }
 				//if (moni>0) Game.Notify(this.name,'Sold <b>'+sold+'</b> for '+Beautify(moni)+' cookies','',2);
 			}
 			this.sacrifice = function (amount)//sell without getting back any money
@@ -7478,7 +7478,7 @@ Game.Launch = function () {
 					Game.spendLump(me.level + 1, loc("level up your %1", me.plural), function () {
 						me.level += 1;
 						if (me.level >= 10 && me.levelAchiev10) Game.Win(me.levelAchiev10.name);
-						if (!free) PlaySound('snd/upgrade.mp3', 0.6);
+						if (!free) PlaySound('sounds/upgrade.mp3', 0.6);
 						Game.LoadMinigames();
 						me.refresh();
 						if (l('productLevel' + me.id)) { var rect = l('productLevel' + me.id).getBounds(); Game.SparkleAt((rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2 - 24 + 32 - TopBarOffset); }
@@ -7573,15 +7573,15 @@ Game.Launch = function () {
 			if (this.id != 0) str += '<div class="row" id="row' + this.id + '"><div class="separatorBottom"></div>';
 			str += '<div class="productButtons">';
 			str += '<div id="productLevel' + this.id + '" class="productButton productLevel lumpsOnly" onclick="Game.ObjectsById[' + this.id + '].levelUp()" ' + Game.getDynamicTooltip('Game.ObjectsById[' + this.id + '].levelTooltip', 'this') + '></div>';
-			str += '<div id="productMinigameButton' + this.id + '" class="productButton productMinigameButton lumpsOnly" onclick="Game.ObjectsById[' + this.id + '].switchMinigame(-1);PlaySound(Game.ObjectsById[' + this.id + '].onMinigame?\'snd/clickOn2.mp3\':\'snd/clickOff2.mp3\');"></div>';
-			if (this.id != 0) str += '<div class="productButton productMute" ' + Game.getTooltip('<div style="width:150px;text-align:center;font-size:11px;" id="tooltipMuteBuilding"><b>' + loc("Mute") + '</b><br>(' + loc("Minimize this building") + ')</div>', 'this') + ' onclick="Game.ObjectsById[' + this.id + '].mute(1);PlaySound(Game.ObjectsById[' + this.id + '].muted?\'snd/clickOff2.mp3\':\'snd/clickOn2.mp3\');" id="productMute' + this.id + '">' + loc("Mute") + '</div>';
+			str += '<div id="productMinigameButton' + this.id + '" class="productButton productMinigameButton lumpsOnly" onclick="Game.ObjectsById[' + this.id + '].switchMinigame(-1);PlaySound(Game.ObjectsById[' + this.id + '].onMinigame?\'sounds/clickOn2.mp3\':\'sounds/clickOff2.mp3\');"></div>';
+			if (this.id != 0) str += '<div class="productButton productMute" ' + Game.getTooltip('<div style="width:150px;text-align:center;font-size:11px;" id="tooltipMuteBuilding"><b>' + loc("Mute") + '</b><br>(' + loc("Minimize this building") + ')</div>', 'this') + ' onclick="Game.ObjectsById[' + this.id + '].mute(1);PlaySound(Game.ObjectsById[' + this.id + '].muted?\'sounds/clickOff2.mp3\':\'sounds/clickOn2.mp3\');" id="productMute' + this.id + '">' + loc("Mute") + '</div>';
 			str += '<div id="productDragonBoost' + this.id + '" style="display:none;" class="productButton productDragonBoost" ' + Game.getDynamicTooltip('function(){if (Game.ObjectsById[' + this.id + '].minigame && Game.ObjectsById[' + this.id + '].minigame.dragonBoostTooltip) return Game.ObjectsById[' + this.id + '].minigame.dragonBoostTooltip(); else return 0;}', 'this') + '><div class="icon" style="vertical-align:middle;display:inline-block;background-position:' + (-30 * 48) + 'px ' + (-12 * 48) + 'px;transform:scale(0.5);margin:-20px -16px;"></div></div>';
 			str += '</div>';
 			if (this.id == 0) l('sectionLeftExtra').innerHTML = l('sectionLeftExtra').innerHTML + str;
 			else {
 				if (this.id == 19) {
 					str += '<canvas style="display:none;" width=64 height=64 id="rowCanvasAdd' + this.id + '"></canvas>';
-					str += '<a class="smallFancyButton framed onlyOnCanvas" style="position:absolute;z-index:10;left:8px;bottom:22px;" ' + Game.clickStr + '="Game.YouCustomizer.prompt();PlaySound(\'snd/tick.mp3\');">' + loc("Customize") + '</a>';
+					str += '<a class="smallFancyButton framed onlyOnCanvas" style="position:absolute;z-index:10;left:8px;bottom:22px;" ' + Game.clickStr + '="Game.YouCustomizer.prompt();PlaySound(\'sounds/tick.mp3\');">' + loc("Customize") + '</a>';
 				}
 				str += '<canvas class="rowCanvas" id="rowCanvas' + this.id + '"></canvas>';
 				str += '<div class="rowSpecial" id="rowSpecial' + this.id + '"></div>';
@@ -7882,7 +7882,7 @@ Game.Launch = function () {
 			}
 
 			Game.storeToRefresh = 1;
-			if (id != -1) PlaySound('snd/tick.mp3');
+			if (id != -1) PlaySound('sounds/tick.mp3');
 		}
 		Game.BuildStore = function ()//create the DOM for the store's buildings
 		{
@@ -8509,7 +8509,7 @@ Game.Launch = function () {
 				if (l('customizerSelect-N-' + gene.id)) l('customizerSelect-N-' + gene.id).innerHTML = Game.YouCustomizer.currentGenes[gene.n] + 1 - gene.choices[0];
 			}
 			if (off != 0) {
-				PlaySound('snd/press.mp3');
+				PlaySound('sounds/press.mp3');
 
 				Game.YouCustomizer.render();
 				Game.YouCustomizer.renderPortrait();
@@ -8566,11 +8566,11 @@ Game.Launch = function () {
 				return '<div style="clear:both;width:100%;margin-bottom:6px;"><a ' + Game.clickStr + '="Game.YouCustomizer.offsetGene(\'' + gene.id + '\',-1)" id="customizerSelect-L-' + gene.id + '" class="framed smallFancyButton" style="float:left;margin-top:-4px;padding:2px 4px;">&lt;</a>' + text + ' <div id="customizerSelect-N-' + gene.id + '" style="display:inline;">' + (gene.isList ? (Game.YouCustomizer.currentGenes[gene.n] + 1) : (Game.YouCustomizer.currentGenes[gene.n] + 1 - gene.choices[0])) + '</div><a ' + Game.clickStr + '="Game.YouCustomizer.offsetGene(\'' + gene.id + '\',1)" id="customizerSelect-R-' + gene.id + '" class="framed smallFancyButton" style="float:right;margin-top:-4px;padding:2px 4px;">&gt;</a></div>';
 			}
 			Game.Prompt('<id CustomizeYou><h3>' + loc("Customize your clones") + '</h3><div class="block" style="text-align:center;font-size:11px;">' + loc("Sprung from your very DNA. Shape them in your image!") + '</div><div class="block" style="position:relative;">' +
-				'<a style="position:absolute;left:4px;top:2px;font-size:10px;padding:2px 6px;" class="option" onclick="Game.YouCustomizer.import();PlaySound(\'snd/tick.mp3\');">' + loc("Import") + '</a>' +
-				'<a style="position:absolute;right:0px;top:2px;font-size:10px;padding:2px 6px;" class="option" onclick="Game.YouCustomizer.export();PlaySound(\'snd/tick.mp3\');">' + loc("Export") + '</a>' +
+				'<a style="position:absolute;left:4px;top:2px;font-size:10px;padding:2px 6px;" class="option" onclick="Game.YouCustomizer.import();PlaySound(\'sounds/tick.mp3\');">' + loc("Import") + '</a>' +
+				'<a style="position:absolute;right:0px;top:2px;font-size:10px;padding:2px 6px;" class="option" onclick="Game.YouCustomizer.export();PlaySound(\'sounds/tick.mp3\');">' + loc("Export") + '</a>' +
 				'<div style="position:relative;width:64px;height:64px;margin:0px auto 8px auto;"><canvas class="crisp" style="mask-image:radial-gradient(rgba(0,0,0,1) 0%,rgba(0,0,0,1) 40%,rgba(0, 0, 0,0) 75%);-webkit-mask-image:radial-gradient(rgba(0,0,0,1) 0%,rgba(0,0,0,1) 60%,rgba(0, 0, 0,0) 75%);border-radius:16px;transform:scale(2);position:absolute;left:16px;top:16px;" width=32 height=32 id="youCustomizerPreview"></canvas><canvas style="filter:blur(1px);opacity:0.5;border-radius:16px;transform:scale(2);position:absolute;left:16px;top:16px;z-index:10;" width=32 height=32 id="youCustomizerPreviewBlur"></canvas></div>' +
 				'<div style="text-align:center;clear:both;font-weight:bold;font-size:11px;" class="titleFont">' +
-				'<a class="option" onclick="Game.YouCustomizer.randomize();PlaySound(\'snd/pop\'+Math.floor(Math.random()*3+1)+\'.mp3\',0.75);">' + loc("Random") + '</a><br>' +
+				'<a class="option" onclick="Game.YouCustomizer.randomize();PlaySound(\'sounds/pop\'+Math.floor(Math.random()*3+1)+\'.mp3\',0.75);">' + loc("Random") + '</a><br>' +
 				makeCustomizerSelector('hair', loc("Hair")) +
 				makeCustomizerSelector('hairCol', loc("Hair color")) +
 				makeCustomizerSelector('skinCol', loc("Skin color")) +
@@ -8644,8 +8644,8 @@ Game.Launch = function () {
 				}
 				me.pics = [];
 				var icon = [0 * 64, me.icon * 64];
-				muteStr += '<div class="tinyProductIcon" id="mutedProduct' + me.id + '" style="display:none;background-position:-' + icon[0] + 'px -' + icon[1] + 'px;" ' + Game.clickStr + '="Game.ObjectsById[' + me.id + '].mute(0);PlaySound(Game.ObjectsById[' + me.id + '].muted?\'snd/clickOff2.mp3\':\'snd/clickOn2.mp3\');" ' + Game.getDynamicTooltip('Game.mutedBuildingTooltip(' + me.id + ')', 'this') + '></div>';
-				//muteStr+='<div class="tinyProductIcon" id="mutedProduct'+me.id+'" style="display:none;background-position:-'+icon[0]+'px -'+icon[1]+'px;" '+Game.clickStr+'="Game.ObjectsById['+me.id+'].mute(0);PlaySound(Game.ObjectsById['+me.id+'].muted?\'snd/clickOff2.mp3\':\'snd/clickOn2.mp3\');" '+Game.getTooltip('<div style="width:150px;text-align:center;font-size:11px;"><b>Unmute '+me.plural+'</b><br>(Display this building)</div>')+'></div>';
+				muteStr += '<div class="tinyProductIcon" id="mutedProduct' + me.id + '" style="display:none;background-position:-' + icon[0] + 'px -' + icon[1] + 'px;" ' + Game.clickStr + '="Game.ObjectsById[' + me.id + '].mute(0);PlaySound(Game.ObjectsById[' + me.id + '].muted?\'sounds/clickOff2.mp3\':\'sounds/clickOn2.mp3\');" ' + Game.getDynamicTooltip('Game.mutedBuildingTooltip(' + me.id + ')', 'this') + '></div>';
+				//muteStr+='<div class="tinyProductIcon" id="mutedProduct'+me.id+'" style="display:none;background-position:-'+icon[0]+'px -'+icon[1]+'px;" '+Game.clickStr+'="Game.ObjectsById['+me.id+'].mute(0);PlaySound(Game.ObjectsById['+me.id+'].muted?\'sounds/clickOff2.mp3\':\'sounds/clickOn2.mp3\');" '+Game.getTooltip('<div style="width:150px;text-align:center;font-size:11px;"><b>Unmute '+me.plural+'</b><br>(Display this building)</div>')+'></div>';
 
 				AddEvent(me.canvas, 'mouseover', function (me) { return function () { me.mouseOn = true; } }(me));
 				AddEvent(me.canvas, 'mouseout', function (me) { return function () { me.mouseOn = false; } }(me));
@@ -8759,7 +8759,7 @@ Game.Launch = function () {
 					if (this.isVaulted()) this.unvault();
 					else this.vault();
 					Game.upgradesToRebuild = 1;
-					PlaySound('snd/tick.mp3');
+					PlaySound('sounds/tick.mp3');
 				}
 			}
 			else this.buy();
@@ -8776,7 +8776,7 @@ Game.Launch = function () {
 						l('toggleBox').style.display = 'none';
 						l('toggleBox').innerHTML = '';
 						Game.choiceSelectorOn = -1;
-						PlaySound('snd/tickOff.mp3');
+						PlaySound('sounds/tickOff.mp3');
 					}
 					else {
 						Game.choiceSelectorOn = this.id;
@@ -8821,7 +8821,7 @@ Game.Launch = function () {
 						l('toggleBox').style.display = 'block';
 						l('toggleBox').focus();
 						Game.tooltip.hide();
-						PlaySound('snd/tick.mp3');
+						PlaySound('sounds/tick.mp3');
 						success = 1;
 					}
 				}
@@ -8840,7 +8840,7 @@ Game.Launch = function () {
 						if (Game.CountsAsUpgradeOwned(this.pool)) Game.UpgradesOwned++;
 						Game.setOnCrate(0);
 						Game.tooltip.hide();
-						PlaySound('snd/buy' + choose([1, 2, 3, 4]) + '.mp3', 0.75);
+						PlaySound('sounds/buy' + choose([1, 2, 3, 4]) + '.mp3', 0.75);
 						success = 1;
 					}
 				}
@@ -8853,9 +8853,9 @@ Game.Launch = function () {
 						this.bought = 1;
 						if (this.buyFunction) this.buyFunction();
 						Game.BuildAscendTree(this);
-						PlaySound('snd/buy' + choose([1, 2, 3, 4]) + '.mp3', 0.75);
-						PlaySound('snd/shimmerClick.mp3');
-						//PlaySound('snd/buyHeavenly.mp3');
+						PlaySound('sounds/buy' + choose([1, 2, 3, 4]) + '.mp3', 0.75);
+						PlaySound('sounds/shimmerClick.mp3');
+						//PlaySound('sounds/buyHeavenly.mp3');
 						success = 1;
 					}
 				}
@@ -8898,16 +8898,16 @@ Game.Launch = function () {
 				Game.upgradesToRebuild = 1;
 				Game.recalculateGains = 1;
 				if (Game.CountsAsUpgradeOwned(this.pool)) Game.UpgradesOwned++;
-				PlaySound('snd/buy' + choose([1, 2, 3, 4]) + '.mp3', 0.75);
-				if (this.pool == 'prestige' || this.pool == 'debug') PlaySound('snd/shimmerClick.mp3');
+				PlaySound('sounds/buy' + choose([1, 2, 3, 4]) + '.mp3', 0.75);
+				if (this.pool == 'prestige' || this.pool == 'debug') PlaySound('sounds/shimmerClick.mp3');
 			}
 			else {
 				this.bought = 0;
 				Game.upgradesToRebuild = 1;
 				Game.recalculateGains = 1;
 				if (Game.CountsAsUpgradeOwned(this.pool)) Game.UpgradesOwned--;
-				PlaySound('snd/sell' + choose([1, 2, 3, 4]) + '.mp3', 0.75);
-				if (this.pool == 'prestige' || this.pool == 'debug') PlaySound('snd/shimmerClick.mp3');
+				PlaySound('sounds/sell' + choose([1, 2, 3, 4]) + '.mp3', 0.75);
+				if (this.pool == 'prestige' || this.pool == 'debug') PlaySound('sounds/shimmerClick.mp3');
 			}
 			if (Game.onMenu == 'stats') Game.UpdateMenu();
 		}
@@ -9753,7 +9753,7 @@ Game.Launch = function () {
 			return Game.UpgradesById[Game.permanentUpgrades[slot]].icon;
 		}
 		Game.AssignPermanentSlot = function (slot) {
-			PlaySound('snd/tick.mp3');
+			PlaySound('sounds/tick.mp3');
 			Game.tooltip.hide();
 			var list = [];
 			for (var i in Game.Upgrades) {
@@ -9775,7 +9775,7 @@ Game.Launch = function () {
 			var upgrades = '';
 			for (var i in list) {
 				var me = list[i];
-				upgrades += Game.crate(me, '', 'PlaySound(\'snd/tick.mp3\');Game.PutUpgradeInPermanentSlot(' + me.id + ',' + slot + ');', 'upgradeForPermanent' + me.id);
+				upgrades += Game.crate(me, '', 'PlaySound(\'sounds/tick.mp3\');Game.PutUpgradeInPermanentSlot(' + me.id + ',' + slot + ');', 'upgradeForPermanent' + me.id);
 			}
 			var upgrade = Game.permanentUpgrades[slot];
 			Game.SelectingPermanentUpgrade = upgrade;
@@ -10009,10 +10009,10 @@ Game.Launch = function () {
 			Game.playGoldenCookieChime();
 		}
 		Game.playGoldenCookieChime = function () {
-			if (Game.chimeType == 1) PlaySound('snd/chime.mp3');
-			else if (Game.chimeType == 2) PlaySound('snd/fortune.mp3');
-			else if (Game.chimeType == 3) PlaySound('snd/cymbalRev.mp3');
-			else if (Game.chimeType == 4) { Game.wrinklerSquishSound++; if (Game.wrinklerSquishSound > 4) { Game.wrinklerSquishSound -= 4; } PlaySound('snd/squeak' + (Game.wrinklerSquishSound) + '.mp3'); }
+			if (Game.chimeType == 1) PlaySound('sounds/chime.mp3');
+			else if (Game.chimeType == 2) PlaySound('sounds/fortune.mp3');
+			else if (Game.chimeType == 3) PlaySound('sounds/cymbalRev.mp3');
+			else if (Game.chimeType == 4) { Game.wrinklerSquishSound++; if (Game.wrinklerSquishSound > 4) { Game.wrinklerSquishSound -= 4; } PlaySound('sounds/squeak' + (Game.wrinklerSquishSound) + '.mp3'); }
 		}
 
 
@@ -10501,7 +10501,7 @@ Game.Launch = function () {
 			Game.Notify(loc("The shimmering veil disappears..."), '', [9, 10]);
 			Game.upgradesToRebuild = 1;
 			Game.recalculateGains = 1;
-			PlaySound('snd/spellFail.mp3', 0.75);
+			PlaySound('sounds/spellFail.mp3', 0.75);
 		}
 
 
@@ -10991,7 +10991,7 @@ Game.Launch = function () {
 					l('jukeboxOnSoundN').innerHTML = (Game.jukebox.onSound + 1) + '/' + (Game.jukebox.sounds.length);
 					l('jukeboxSoundSelect').value = Game.jukebox.onSound;
 				}
-				PlaySound('snd/' + Game.jukebox.sounds[Game.jukebox.onSound] + '.mp3', 1);
+				PlaySound('sounds/' + Game.jukebox.sounds[Game.jukebox.onSound] + '.mp3', 1);
 			},
 			setTrack: function (id, dontPlay) {
 				if (id >= Game.jukebox.tracks.length) id = 0;
@@ -11214,7 +11214,7 @@ Game.Launch = function () {
 
 					console.log('out:', out);
 
-					PlaySound('snd/tick.mp3'); PlaySound('snd/giftGet.mp3');
+					PlaySound('sounds/tick.mp3'); PlaySound('sounds/giftGet.mp3');
 					Game.ClosePrompt();
 					Game.Prompt('<id GiftRedeemed><h3>' + loc("Redeem a gift") + '</h3>' +
 						'<div class="block" style="font-size:11px;">' + '<div id="giftWrapped" class="crate noFrame upgrade enabled pucker" style="background-position:' + (-icon[0] * 48) + 'px ' + (-icon[1] * 48) + 'px;float:none;"></div>' + '<div class="line"></div>' +
@@ -11269,7 +11269,7 @@ Game.Launch = function () {
 						l('giftBoxDesign').dataset.icon = icon[0] + ' ' + icon[1];
 						l('giftBoxDesign').style.backgroundPosition = (-icon[0] * 48) + 'px ' + (-icon[1] * 48) + 'px';
 						l('giftBoxDesignButton').addEventListener('click', function () {
-							PlaySound('snd/tick.mp3');
+							PlaySound('sounds/tick.mp3');
 							var icons = Game.giftBoxDesigns;
 							var str = '';
 							for (var i = 0; i < icons.length; i++) {
@@ -11285,7 +11285,7 @@ Game.Launch = function () {
 									l('giftBoxDesign').style.backgroundPosition = (-icon[0] * 48) + 'px ' + (-icon[1] * 48) + 'px';
 									triggerAnim(l('giftBoxDesign'), 'pucker');
 									l('giftPromptSelector').style.display = 'none';
-									PlaySound('snd/tick.mp3');
+									PlaySound('sounds/tick.mp3');
 								});
 							}
 						});
@@ -11329,7 +11329,7 @@ Game.Launch = function () {
 								l('giftBoxIconNone').style.display = 'inline-block';
 								l('giftBoxIcon').style.display = 'none';
 								l('giftPromptSelector').style.display = 'none';
-								PlaySound('snd/tick.mp3');
+								PlaySound('sounds/tick.mp3');
 							});
 							for (var i = 0; i < icons.length; i++) {
 								l('giftSelector-' + i).addEventListener('click', function (e) {
@@ -11339,7 +11339,7 @@ Game.Launch = function () {
 									l('giftBoxIconNone').style.display = 'none';
 									l('giftBoxIcon').style.display = 'inline-block';
 									l('giftPromptSelector').style.display = 'none';
-									PlaySound('snd/tick.mp3');
+									PlaySound('sounds/tick.mp3');
 								});
 							}
 						};
@@ -11416,7 +11416,7 @@ Game.Launch = function () {
 
 							str = utf8_to_b64(str);
 
-							PlaySound('snd/tick.mp3'); PlaySound('snd/giftSend.mp3');
+							PlaySound('sounds/tick.mp3'); PlaySound('sounds/giftSend.mp3');
 							Game.ClosePrompt();
 							Game.Prompt('<id GiftSendReady><h3>' + loc("Send a gift") + '</h3>' +
 								'<div class="block" style="font-size:11px;">' + '<div id="giftWrapped" class="crate noFrame upgrade enabled pucker" style="background-position:' + (-icon[0] * 48) + 'px ' + (-icon[1] * 48) + 'px;float:none;"></div>' + '<div class="line"></div>' +
@@ -11631,7 +11631,7 @@ Game.Launch = function () {
 							Game.recalculateGains = 1;
 							Game.season = Game.baseSeason;
 							Game.seasonT = -1;
-							PlaySound('snd/tick.mp3');
+							PlaySound('sounds/tick.mp3');
 							return false;
 						}
 						else return true;
@@ -12180,7 +12180,7 @@ Game.Launch = function () {
 		new Game.Achievement('Rebirth', loc("Ascend at least once."), [21, 6]);
 
 		order = 11000;
-		new Game.Achievement('Here you go', loc("Click this achievement's slot.") + '<q>All you had to do was ask.</q>', [1, 7]); Game.last.clickFunction = function () { if (!Game.HasAchiev('Here you go')) { PlaySound('snd/tick.mp3'); Game.Win('Here you go'); } };
+		new Game.Achievement('Here you go', loc("Click this achievement's slot.") + '<q>All you had to do was ask.</q>', [1, 7]); Game.last.clickFunction = function () { if (!Game.HasAchiev('Here you go')) { PlaySound('sounds/tick.mp3'); Game.Win('Here you go'); } };
 
 		order = 30000;
 		new Game.Achievement('Resurrection', loc("Ascend <b>%1 times</b>.", 10), [21, 6]);
@@ -13364,7 +13364,7 @@ Game.Launch = function () {
 		}
 		Game.wrinklerSquishSound = Math.floor(Math.random() * 4) + 1;
 		Game.playWrinklerSquishSound = function () {
-			PlaySound('snd/' + (Game.WINKLERS ? 'squeak' : 'squish') + (Game.wrinklerSquishSound) + '.mp3', 0.5);
+			PlaySound('sounds/' + (Game.WINKLERS ? 'squeak' : 'squish') + (Game.wrinklerSquishSound) + '.mp3', 0.5);
 			Game.wrinklerSquishSound += Math.floor(Math.random() * 1.5) + 1;
 			if (Game.wrinklerSquishSound > 4) Game.wrinklerSquishSound -= 4;
 		}
@@ -13470,7 +13470,7 @@ Game.Launch = function () {
 						me.hurt = Math.max(me.hurt, 0.25);
 						//me.close*=0.99;
 						if (Game.Click && Game.lastClickedEl == l('backgroundLeftCanvas')) {
-							if (Game.keys[17] && Game.sesame) { me.type = !me.type; PlaySound('snd/shimmerClick.mp3'); }//ctrl-click on a wrinkler in god mode to toggle its shininess
+							if (Game.keys[17] && Game.sesame) { me.type = !me.type; PlaySound('sounds/shimmerClick.mp3'); }//ctrl-click on a wrinkler in god mode to toggle its shininess
 							else {
 								Game.playWrinklerSquishSound();
 								me.clicks++;
@@ -13502,7 +13502,7 @@ Game.Launch = function () {
 				}
 				if (me.hp <= 0.5 && me.phase > 0) {
 					Game.playWrinklerSquishSound();
-					PlaySound('snd/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.75);
+					PlaySound('sounds/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.75);
 					Game.wrinklersPopped++;
 					Game.recalculateGains = 1;
 					me.phase = 0;
@@ -13734,9 +13734,9 @@ Game.Launch = function () {
 						Game.mousePointer = 1;
 						Game.CanClick = 0;
 						if (Game.Click && Game.lastClickedEl == l('backgroundLeftCanvas')) {
-							if (Game.specialTab != Game.specialTabs[i]) { Game.specialTab = Game.specialTabs[i]; Game.ToggleSpecialMenu(1); PlaySound('snd/press.mp3'); }
-							else { Game.ToggleSpecialMenu(0); PlaySound('snd/press.mp3'); }
-							//PlaySound('snd/tick.mp3');
+							if (Game.specialTab != Game.specialTabs[i]) { Game.specialTab = Game.specialTabs[i]; Game.ToggleSpecialMenu(1); PlaySound('sounds/press.mp3'); }
+							else { Game.ToggleSpecialMenu(0); PlaySound('sounds/press.mp3'); }
+							//PlaySound('sounds/tick.mp3');
 						}
 					}
 
@@ -13753,7 +13753,7 @@ Game.Launch = function () {
 		Game.UpgradeSanta = function () {
 			var moni = Math.pow(Game.santaLevel + 1, Game.santaLevel + 1);
 			if (Game.cookies > moni && Game.santaLevel < 14) {
-				PlaySound('snd/shimmerClick.mp3');
+				PlaySound('sounds/shimmerClick.mp3');
 
 				Game.Spend(moni);
 				Game.santaLevel = (Game.santaLevel + 1) % 15;
@@ -13908,7 +13908,7 @@ Game.Launch = function () {
 			for (var i in Game.dragonAuras) {
 				if (Game.dragonLevel >= parseInt(i) + 4) {
 					var icon = Game.dragonAuras[i].pic;
-					if (i == 0 || i != otherAura) str += '<div class="crate enabled' + (i == Game.SelectingDragonAura ? ' highlighted' : '') + '" style="opacity:1;float:none;display:inline-block;' + writeIcon(icon) + '" ' + Game.clickStr + '="PlaySound(\'snd/tick.mp3\');Game.SetDragonAura(' + i + ',' + slot + ');" onMouseOut="Game.DescribeDragonAura(' + Game.SelectingDragonAura + ');" onMouseOver="Game.DescribeDragonAura(' + i + ');"' +
+					if (i == 0 || i != otherAura) str += '<div class="crate enabled' + (i == Game.SelectingDragonAura ? ' highlighted' : '') + '" style="opacity:1;float:none;display:inline-block;' + writeIcon(icon) + '" ' + Game.clickStr + '="PlaySound(\'sounds/tick.mp3\');Game.SetDragonAura(' + i + ',' + slot + ');" onMouseOut="Game.DescribeDragonAura(' + Game.SelectingDragonAura + ');" onMouseOver="Game.DescribeDragonAura(' + i + ');"' +
 						'></div>';
 				}
 			}
@@ -13940,7 +13940,7 @@ Game.Launch = function () {
 
 		Game.UpgradeDragon = function () {
 			if (Game.dragonLevel < Game.dragonLevels.length - 1 && Game.dragonLevels[Game.dragonLevel].cost()) {
-				PlaySound('snd/shimmerClick.mp3');
+				PlaySound('sounds/shimmerClick.mp3');
 				Game.dragonLevels[Game.dragonLevel].buy();
 				Game.dragonLevel = (Game.dragonLevel + 1) % Game.dragonLevels.length;
 
@@ -13956,9 +13956,9 @@ Game.Launch = function () {
 		Game.ClickSpecialPic = function () {
 			if (Game.specialTab == 'dragon' && Game.dragonLevel >= 4 && Game.Has('Pet the dragon') && l('specialPic')) {
 				triggerAnim(l('specialPic'), 'pucker');
-				PlaySound('snd/click' + Math.floor(Math.random() * 7 + 1) + '.mp3', 0.3);
-				if (Date.now() - Game.lastClickedSpecialPic > 2000) PlaySound('snd/growl.mp3');
-				//else if (Math.random()<0.5) PlaySound('snd/growl.mp3',0.5+Math.random()*0.2);
+				PlaySound('sounds/click' + Math.floor(Math.random() * 7 + 1) + '.mp3', 0.3);
+				if (Date.now() - Game.lastClickedSpecialPic > 2000) PlaySound('sounds/growl.mp3');
+				//else if (Math.random()<0.5) PlaySound('sounds/growl.mp3',0.5+Math.random()*0.2);
 				Game.lastClickedSpecialPic = Date.now();
 				if (Game.prefs.particles) {
 					Game.particleAdd(Game.mouseX, Game.mouseY - 32, Math.random() * 4 - 2, Math.random() * -2 - 4, Math.random() * 0.2 + 0.5, 1, 2, [20, 3]);
@@ -13986,7 +13986,7 @@ Game.Launch = function () {
 				else { pic = 'dragon.png?v=' + Game.version; frame = 4; }
 
 				var str = '<div id="specialPic" ' + Game.clickStr + '="Game.ClickSpecialPic();" style="' + ((Game.specialTab == 'dragon' && Game.dragonLevel >= 4 && Game.Has('Pet the dragon')) ? 'cursor:pointer;' : '') + 'position:absolute;left:-16px;top:-64px;width:96px;height:96px;background:url(' + Game.resPath + 'images/' + pic + ');background-position:' + (-frame * 96) + 'px 0px;filter:drop-shadow(0px 3px 2px #000);-webkit-filter:drop-shadow(0px 3px 2px #000);"></div>';
-				str += '<div class="close" onclick="PlaySound(\'snd/press.mp3\');Game.ToggleSpecialMenu(0);">x</div>';
+				str += '<div class="close" onclick="PlaySound(\'sounds/press.mp3\');Game.ToggleSpecialMenu(0);">x</div>';
 
 				if (Game.specialTab == 'santa') {
 					var moni = Math.pow(Game.santaLevel + 1, Game.santaLevel + 1);
@@ -14008,7 +14008,7 @@ Game.Launch = function () {
 
 					if (Game.dragonLevel >= 5) {
 						var icon = Game.dragonAuras[Game.dragonAura].pic;
-						str += '<div class="crate enabled" style="opacity:1;position:absolute;right:18px;top:-58px;' + writeIcon(icon) + '" ' + Game.clickStr + '="PlaySound(\'snd/tick.mp3\');Game.SelectDragonAura(0);" ' + Game.getTooltip(
+						str += '<div class="crate enabled" style="opacity:1;position:absolute;right:18px;top:-58px;' + writeIcon(icon) + '" ' + Game.clickStr + '="PlaySound(\'sounds/tick.mp3\');Game.SelectDragonAura(0);" ' + Game.getTooltip(
 							'<div style="margin:8px;min-width:300px;text-align:center;" id="tooltipDragonAuraSelect"><h4>' + Game.dragonAuras[Game.dragonAura].dname + '</h4>' +
 							'<div class="line"></div>' +
 							Game.dragonAuras[Game.dragonAura].desc +
@@ -14019,7 +14019,7 @@ Game.Launch = function () {
 					if (Game.dragonLevel >= 27)//2nd aura slot; increased with last building
 					{
 						var icon = Game.dragonAuras[Game.dragonAura2].pic;
-						str += '<div class="crate enabled" style="opacity:1;position:absolute;right:80px;top:-58px;' + writeIcon(icon) + '" ' + Game.clickStr + '="PlaySound(\'snd/tick.mp3\');Game.SelectDragonAura(1);" ' + Game.getTooltip(
+						str += '<div class="crate enabled" style="opacity:1;position:absolute;right:80px;top:-58px;' + writeIcon(icon) + '" ' + Game.clickStr + '="PlaySound(\'sounds/tick.mp3\');Game.SelectDragonAura(1);" ' + Game.getTooltip(
 							'<div style="margin:8px;min-width:300px;text-align:center;" id="tooltipDragonAuraSelect2"><h4>' + Game.dragonAuras[Game.dragonAura2].dname + '</h4>' +
 							'<div class="line"></div>' +
 							Game.dragonAuras[Game.dragonAura2].desc +
@@ -15454,11 +15454,11 @@ Game.Launch = function () {
 			if (ascendNowToGet > Game.ascendMeterLevel || Game.ascendMeterPercentT < Game.ascendMeterPercent) {
 				//reset the gauge and play a sound if we gained a potential level
 				Game.ascendMeterPercent = 0;
-				//PlaySound('snd/levelPrestige.mp3');//a bit too annoying
+				//PlaySound('sounds/levelPrestige.mp3');//a bit too annoying
 			}
 			Game.ascendMeterLevel = ascendNowToGet;
 			Game.ascendMeterPercentT = percent;//gauge that fills up as you near your next chip
-			//if (Game.ascendMeterPercentT<Game.ascendMeterPercent) {Game.ascendMeterPercent=0;PlaySound('snd/levelPrestige.mp3',0.5);}
+			//if (Game.ascendMeterPercentT<Game.ascendMeterPercent) {Game.ascendMeterPercent=0;PlaySound('sounds/levelPrestige.mp3',0.5);}
 			//if (percent>=1) {Game.ascendMeter.className='';} else Game.ascendMeter.className='filling';
 		}
 		//Game.ascendMeter.style.right=Math.floor(Math.max(0,1-Game.ascendMeterPercent)*100)+'px';
@@ -15748,7 +15748,7 @@ window.onload = function () {
 			for (var i in Langs) {
 				var lang = Langs[i];
 				AddEvent(l('langSelect-' + i), 'click', function (lang) { return function () { callback(lang); }; }(i));
-				AddEvent(l('langSelect-' + i), 'mouseover', function (lang) { return function () { PlaySound('snd/smallTick.mp3', 0.75); l('languageSelectHeader').innerHTML = Langs[lang].changeLanguage; }; }(i));
+				AddEvent(l('langSelect-' + i), 'mouseover', function (lang) { return function () { PlaySound('sounds/smallTick.mp3', 0.75); l('languageSelectHeader').innerHTML = Langs[lang].changeLanguage; }; }(i));
 			}
 		}
 

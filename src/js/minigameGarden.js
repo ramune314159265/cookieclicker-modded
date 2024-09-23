@@ -988,7 +988,7 @@ M.launch=function()
 				icon:0,
 				descFunc:function(){return loc("Instantly harvest all plants in your garden.")+'<div class="line"></div>'+((EN && Game.keys[16] && Game.keys[17])?'<b>You are holding shift+ctrl.</b> Only mature, mortal plants will be harvested.':loc("%1 to harvest only mature, mortal plants.",loc("Shift")+'+'+loc("Ctrl")+'+'+loc("Click")));},
 				func:function(){
-					PlaySound('snd/toneTick.mp3');
+					PlaySound('sounds/toneTick.mp3');
 					/*if (M.freeze){return false;}*/
 					if (Game.keys[16] && Game.keys[17]) M.harvestAll(0,1,1);//ctrl & shift, harvest only mature non-immortal plants
 					else M.harvestAll();
@@ -1003,12 +1003,12 @@ M.launch=function()
 				},
 				func:function(){
 					//if (!M.freeze && M.nextFreeze>Date.now()) return false;
-					PlaySound('snd/toneTick.mp3');
+					PlaySound('sounds/toneTick.mp3');
 					M.freeze=(M.freeze?0:1);
 					if (M.freeze)
 					{
 						M.computeEffs();
-						PlaySound('snd/freezeGarden.mp3');
+						PlaySound('sounds/freezeGarden.mp3');
 						this.classList.add('on');
 						l('gardenContent').classList.add('gardenFrozen');
 
@@ -1046,7 +1046,7 @@ M.launch=function()
 				name:loc("Sacrifice garden"),
 				icon:2,
 				desc:loc("A swarm of sugar hornets comes down on your garden, <span class=\"red\">destroying every plant as well as every seed you've unlocked</span> - leaving only a %1 seed.<br>In exchange, they will grant you <span class=\"green\">%2</span>.<br>This action is only available with a complete seed log.",[loc("Baker's wheat"),loc("%1 sugar lump",LBeautify(10))]),
-				func:function(){PlaySound('snd/toneTick.mp3');M.askConvert();},
+				func:function(){PlaySound('sounds/toneTick.mp3');M.askConvert();},
 				isDisplayed:function(){if (M.plantsUnlockedN>=M.plantsN) return true; else return false;},
 			},
 		};
@@ -1300,7 +1300,7 @@ M.launch=function()
 					}
 					if (!me.plantable && !Game.sesame) return false;
 					if (M.seedSelected==me.id){M.seedSelected=-1;}
-					else {M.seedSelected=me.id;PlaySound('snd/toneTick.mp3');}
+					else {M.seedSelected=me.id;PlaySound('sounds/toneTick.mp3');}
 					for (var i in M.plants)
 					{
 						var it=M.plants[i];
@@ -1348,7 +1348,7 @@ M.launch=function()
 				var me=M.soils[i];
 				AddEvent(l('gardenSoil-'+me.id),'click',function(me){return function(){
 					if (M.freeze || M.soil==me.id || M.nextSoil>Date.now() || M.parent.amount<me.req){return false;}
-					PlaySound('snd/toneTick.mp3');
+					PlaySound('sounds/toneTick.mp3');
 					M.nextSoil=Date.now()+(Game.Has('Turbo-charged soil')?1:(1000*60*10));
 					M.toCompute=true;M.soil=me.id;M.computeStepT();
 					for (var i in M.soils){var it=M.soils[i];if (it.id==M.soil){l('gardenSoil-'+it.id).classList.add('on');}else{l('gardenSoil-'+it.id).classList.remove('on');}}
@@ -1436,7 +1436,7 @@ M.launch=function()
 					else {l('gardenSeed-'+it.id).classList.remove('on');}
 				}
 			}
-			//PlaySound('snd/tick.mp3');
+			//PlaySound('sounds/tick.mp3');
 		}
 
 		M.useTool=function(what,x,y)
@@ -1445,7 +1445,7 @@ M.launch=function()
 			if (harvested)
 			{
 				Game.SparkleAt(Game.mouseX,Game.mouseY);
-				PlaySound('snd/harvest'+choose(['1','2','3'])+'.mp3',1,0.2);
+				PlaySound('sounds/harvest'+choose(['1','2','3'])+'.mp3',1,0.2);
 			}
 			else
 			{
@@ -1455,7 +1455,7 @@ M.launch=function()
 					M.toRebuild=true;
 					Game.Spend(M.getCost(M.plantsById[what]));
 					Game.SparkleAt(Game.mouseX,Game.mouseY);
-					PlaySound('snd/tillb'+choose(['1','2','3'])+'.mp3',1,0.2);
+					PlaySound('sounds/tillb'+choose(['1','2','3'])+'.mp3',1,0.2);
 					return true;
 				}
 			}
@@ -1513,7 +1513,7 @@ M.launch=function()
 			Game.Win('Seedless to nay');
 			M.convertTimes++;
 			M.computeMatures();
-			PlaySound('snd/spellFail.mp3',0.75);
+			PlaySound('sounds/spellFail.mp3',0.75);
 		}
 
 		M.harvestAll=function(type,mature,mortal)
@@ -1539,9 +1539,9 @@ M.launch=function()
 					}
 				}
 			}
-			if (harvested>0) setTimeout(function(){PlaySound('snd/harvest1.mp3',1,0.2);},50);
-			if (harvested>2) setTimeout(function(){PlaySound('snd/harvest2.mp3',1,0.2);},150);
-			if (harvested>6) setTimeout(function(){PlaySound('snd/harvest3.mp3',1,0.2);},250);
+			if (harvested>0) setTimeout(function(){PlaySound('sounds/harvest1.mp3',1,0.2);},50);
+			if (harvested>2) setTimeout(function(){PlaySound('sounds/harvest2.mp3',1,0.2);},150);
+			if (harvested>6) setTimeout(function(){PlaySound('sounds/harvest3.mp3',1,0.2);},250);
 		}
 		M.harvest=function(x,y,manual)
 		{
@@ -1666,7 +1666,7 @@ M.launch=function()
 				M.nextSoil=Date.now();
 				//M.nextFreeze=Date.now();
 				M.nextStep=Date.now();
-				PlaySound('snd/pop'+Math.floor(Math.random()*3+1)+'.mp3',0.75);
+				PlaySound('sounds/pop'+Math.floor(Math.random()*3+1)+'.mp3',0.75);
 			});
 		});
 		AddEvent(l('gardenSeedsUnlocked'),'click',function()

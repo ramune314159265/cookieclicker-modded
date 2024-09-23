@@ -233,7 +233,7 @@ function main() {
 		button.className = "smallFancyButton prefButton option" + (option.value ? "" : " off");
 		eval(
 			`Game.func = function () {toggleOption("${name}");
-		PlaySound("snd/tick.mp3"); };`
+		PlaySound("sounds/tick.mp3"); };`
 		);
 		button.onclick = Game.func;
 		button.innerHTML = option.name + " " + (option.value ? "ON" : "OFF");
@@ -269,7 +269,7 @@ function main() {
 		slider.step = step;
 		slider.onchange = Game.func;
 		slider.oninput = Game.func;
-		slider.onmouseup = "PlaySound('snd/tick.mp3');";
+		slider.onmouseup = "PlaySound('sounds/tick.mp3');";
 		slider.id = name + "Slider";
 		slider.value = option.value;
 

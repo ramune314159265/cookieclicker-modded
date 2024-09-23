@@ -695,7 +695,7 @@ const betterJapanese = {
         betterJapanese.config[targetProp] = !betterJapanese.config[targetProp]
         button.className = `smallFancyButton prefButton option ${this.config[targetProp] ? 'on' : 'off'}`
         button.innerText = `${desc} ${this.config[targetProp] ? loc('ON') : loc('OFF')}`
-        PlaySound('snd/tick.mp3')
+        PlaySound('sounds/tick.mp3')
     },
 
     addDevButton: function() {
