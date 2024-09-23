@@ -2634,6 +2634,24 @@ Game.Launch = function () {
 					else {
 						str = escape(str);
 						localStorageSet(Game.SaveTo, str);//aaand save
+						if (localStorageGet('saveUrl')) {
+							try {
+								fetch(localStorageGet('saveUrl'), {
+									method: 'POST',
+									mode: 'no-cors',
+									headers: {
+										"Content-Type": "application/json"
+									},
+									body: JSON.stringify({
+										"saveData": str,
+										"cookieCount": Beautify(Game.cookies),
+										"unixTime": Date.now()
+									})
+								})
+							} catch {
+								console.error('Error while sending data')
+							}
+						}
 						if (App) App.save(str);
 						if (!localStorageGet(Game.SaveTo)) {
 							Game.Notify(loc("Error while saving"), loc("Export your save instead!"));
