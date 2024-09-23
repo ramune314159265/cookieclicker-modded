@@ -2455,7 +2455,6 @@ Game.Launch = function () {
 					},
 				})).json();
 				Game.ImportSaveCode(dataList.at(-1).saveData);
-				Game.Notify(loc("Game loaded"), '', '', 1, 1);
 			} catch (e) {
 				console.error(e);
 				Game.Notify(loc("Error importing save"), loc("Oops, looks like the import string is all wrong!"), '', 6, 1);
@@ -6052,6 +6051,17 @@ Game.Launch = function () {
 					};
 				}(i));
 			}
+		}
+
+		Game.showUrlPrompt = function (firstLaunch) {
+			Game.Prompt('<id ChangeUrl>' + (firstLaunch ? '<noClose>' : '') + '<h3 id="urlChangeHeader">' + 'サーバーURLを指定' + '</h3>' +
+				'<div class="line"></div>' +
+				'<input id="urlChangeInput" type="url" pattern="https://.*" placeholder="https://script.google.com/macros/s/***/exec">',
+				[loc("Confirm")]);
+			l('promptOption0').addEventListener('click', function () {
+				localStorageSet('saveUrl', l('urlChangeInput').value);
+				Game.ServerLoad();
+			}, { once: true })
 		}
 
 		ON = ' ' + loc("ON");
@@ -15723,7 +15733,10 @@ window.onload = function () {
 									'Remember : cheated cookies taste awful!',
 									'Hey, Orteil here. Cheated cookies taste awful... or do they?',
 								]) + ' ===]');
-								Game.Load(function () { Game.Init(); if (firstLaunch) Game.showLangSelection(true); });
+								Game.Load(function () {
+									Game.Init();
+									if (firstLaunch) Game.showLangSelection(true);
+								});
 								//try {Game.Load(Game.Init);}
 								//catch(err) {console.log('ERROR : '+err.message);}
 							}
