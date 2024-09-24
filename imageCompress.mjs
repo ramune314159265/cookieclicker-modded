@@ -15,6 +15,10 @@ const extensionOptions = {
 		quality: 50,
 		effort: 6
 	},
+	gif: {
+		encoder: 'gif',
+		effort: 8
+	},
 }
 
 const imageFiles = fs.readdirSync(imageDir).filter((file) => {
