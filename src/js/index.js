@@ -2457,7 +2457,6 @@ Game.Launch = function () {
 				Game.ImportSaveCode(dataList.at(-1).saveData);
 			} catch (e) {
 				console.error(e);
-				Game.Notify(loc("Error importing save"), loc("Oops, looks like the import string is all wrong!"), '', 6, 1);
 			}
 		}
 
