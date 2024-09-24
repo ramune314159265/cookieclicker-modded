@@ -2454,7 +2454,24 @@ Game.Launch = function () {
 						'Content-Type': 'application/x-www-form-urlencoded',
 					},
 				})).json();
-				Game.ImportSaveCode(dataList.at(-1).saveData);
+				Game.Prompt('<id ChangeLanguage><h3 id="languageSelectHeader">' + loc("セーブデータを選択") + '</h3>' +
+					'<div class="line"></div>' +
+					dataList
+						.reverse()
+						.map((data, i) => {
+							return '<div class="langSelectButton title" style="padding:4px;text-align:left;" id="savedataSelect-' + i + '">' + data.cookieCount + '<br>' + new Date(data.unixTime).toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) + '</div>';
+						})
+						.join(''),
+					[loc("Cancel")]
+				);
+
+				dataList.forEach((data, i) => {
+					AddEvent(l('savedataSelect-' + i), 'click', function () {
+						PlaySound('sounds/tick.mp3');
+						Game.ImportSaveCode(dataList[i].saveData);
+					});
+				})
+
 			} catch (e) {
 				console.error(e);
 			}
