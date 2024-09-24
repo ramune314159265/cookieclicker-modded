@@ -7989,7 +7989,7 @@ Game.Launch = function () {
 							var script = document.createElement('script');
 							script.id = 'minigameScript-' + me.id;
 							Game.scriptBindings['minigameScript-' + me.id] = me;
-							script.setAttribute('src', me.minigameUrl + '?r=' + Game.version);
+							script.setAttribute('src', './js/' + me.minigameUrl + '?r=' + Game.version);
 							script.onload = function (me, script) {
 								return function () {
 									if (!me.minigameLoaded) Game.scriptLoaded(me, script);
