@@ -335,7 +335,7 @@ AddLanguage('JA','japanese',{
 	"New version available: v. %1!": "新しいバージョンがあります： v. %1！",
 	"Update note: \"%1\"": "アップデートに関するノート： \"%1\"",
 	"Refresh to get it!": "再読み込みして入手しましょう！",
-	"You are currently playing Cookie Clicker on the <b>%1</b> protocol.<br>The <b>%2</b> version uses a different save slot than this one.<br>Click this lock to reload the page and switch to the <b>%2</b> version!": "現在、<b>%1</b>プロトコルでCookie Clickerをプレイしています。<br><b>%2</b>バージョンでは、これとは別のセーブスロットを使用します。<br>このロックをクリックすると、ページを再読み込みして<b>%2</b>バージョンに切り替えます！",
+	"You are currently playing Cookie Clicker on the <b>%1</b> protocol.<br>The <b>%2</b> version uses a different save slot than this one.<br>Click this lock to reload the page and switch to the <b>%2</b> version!": "現在、<b>%1</b>プロトコルでCookie Clickerをプレイしています。",
 	"+%1 more notification.": [
 		"さらに+%1件の通知あり。",
 		"さらに+%1件の通知あり。"
