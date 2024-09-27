@@ -19,6 +19,9 @@ const extensionOptions = {
 		encoder: 'gif',
 		effort: 8
 	},
+	ico: {
+		encoder: ''
+	},
 }
 
 const imageFiles = fs.readdirSync(imageDir).filter((file) => {
@@ -32,6 +35,11 @@ if (!fs.existsSync(outputDir)) {
 await Promise.all(
 	imageFiles.map(async (file) => {
 		const encodeOption = extensionOptions[file.split('.').at(-1)]
+
+		if (!encodeOption.encoder) {
+			fs.copyFileSync(path.join(imageDir, file), path.join(outputDir, file))
+			return
+		}
 
 		await sharp(path.join(imageDir, file))
 			.toFormat(encodeOption.encoder, encodeOption)
