@@ -1,0 +1,18 @@
+{
+	"name": "Cookie Clicker",
+	"description": "本家: https://orteil.dashnet.org/cookieclicker/",
+	"icons": [
+		{
+			"src": "./images/icon.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"start_url": "./",
+	"display": "standalone",
+	"theme_color": "#ffffff",
+	"categories": [
+		"entertainment",
+		"games"
+	]
+}
