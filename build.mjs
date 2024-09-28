@@ -1,6 +1,6 @@
 import fs from 'fs-extra'
 
-const copyTargets = ['index.html', 'style.css', 'grab.json', 'images/', 'sounds/', 'js/']
+const copyTargets = ['index.html', 'style.css', 'grab.json', 'sw.js', 'manifest.json', 'images/', 'sounds/', 'js/']
 
 console.time('build')
 
