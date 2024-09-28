@@ -2443,7 +2443,7 @@ Game.Launch = function () {
 			}
 
 			try {
-				const dataList = await (await fetch(url, {
+				const dataList = await (await fetch(`${url}?nocache`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded',
@@ -2666,7 +2666,7 @@ Game.Launch = function () {
 						localStorageSet(Game.SaveTo, str);//aaand save
 						if (localStorageGet('saveUrl')) {
 							try {
-								fetch(localStorageGet('saveUrl'), {
+								fetch(`${localStorageGet('saveUrl')}?nocache`, {
 									method: 'POST',
 									mode: 'no-cors',
 									headers: {

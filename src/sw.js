@@ -11,6 +11,9 @@ self.addEventListener('fetch', e => {
 	if (!url.protocol.includes('http')) {
 		return
 	}
+	if (url.searchParams.has('nocache')) {
+		return
+	}
 	e.respondWith(
 		caches.open(cacheName).then(cache => {
 			return cache.match(e.request).then(response => {
