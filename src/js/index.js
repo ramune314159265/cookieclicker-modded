@@ -15058,7 +15058,7 @@ Game.Launch = function () {
 
 		if (!EN) {
 			var adaptWidth = function (node) {
-				var el = node.firstChild;
+				var el = node.firstElementChild;
 				var width = el.clientWidth;
 				if (el.classList.contains('subButton')) {
 					if (width / 95 > 1) el.style.padding = '6px 0px';
@@ -15069,10 +15069,10 @@ Game.Launch = function () {
 					el.style.transform = 'scale(1,' + (width) + ')';
 				}
 			}
-			l('prefsButton').firstChild.innerHTML = loc("Options");
-			l('statsButton').firstChild.innerHTML = loc("Stats");
-			l('logButton').firstChild.innerHTML = loc("Info");
-			l('legacyButton').firstChild.innerHTML = loc("Legacy");
+			l('prefsButton').firstElementChild.innerHTML = loc("Options");
+			l('statsButton').firstElementChild.innerHTML = loc("Stats");
+			l('logButton').firstElementChild.innerHTML = loc("Info");
+			l('legacyButton').firstElementChild.innerHTML = loc("Legacy");
 			adaptWidth(l('prefsButton'));
 			adaptWidth(l('statsButton'));
 			adaptWidth(l('logButton'));
