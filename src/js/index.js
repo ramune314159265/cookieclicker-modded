@@ -2450,13 +2450,14 @@ Game.Launch = function () {
 					},
 				})).json();
 				Game.Prompt('<id ChangeLanguage><h3 id="languageSelectHeader">' + loc("セーブデータを選択") + '</h3>' +
-					'<div class="line"></div>' +
+					'<div class="line"></div><div style="height:300px;overflow-y:auto;">' +
 					dataList
 						.reverse()
 						.map((data, i) => {
 							return '<div class="langSelectButton title" style="padding:4px;text-align:left;" id="savedataSelect-' + i + '">' + data.cookieCount + '<br>' + new Date(data.unixTime).toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) + '</div>';
 						})
-						.join(''),
+						.join('') +
+					'</div>',
 					[loc("Cancel")]
 				);
 
