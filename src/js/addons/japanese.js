@@ -65,7 +65,7 @@ const betterJapanese = {
         this.initAfterLoad()
 
         // Web版で既にDOMが構築されていた場合はDOMを再構成するスクリプトを読み込む (一部の翻訳が適用されないため)
-        if (!App && Game.ready) Game.LoadMod(`https://pages.yukineko.me/better-japanese/rebuild.js?nocache=${Date.now()}`)
+        if (!App && Game.ready) Game.LoadMod('./js/addons/japaneserebuild.js')
 
         this.log('Initialized')
     },

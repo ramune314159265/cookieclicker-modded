@@ -1850,7 +1850,7 @@ Game.Launch = function () {
 		}
 		Game.clickStr = Game.touchEvents ? 'ontouchend' : 'onclick';
 
-		l('versionNumber').innerHTML = 'v. ' + Game.version + (!App ? ('<div id="httpsSwitch" style="cursor:pointer;display:inline-block;background:url(images/' + (Game.https ? 'lockOn' : 'lockOff') + '.png);width:16px;height:16px;position:relative;top:4px;left:0px;margin:0px -2px;"></div>') : '') + (Game.beta ? ' <span style="color:#ff0;">beta</span>' : '');
+		l('versionNumber').innerHTML = 'v. ' + Game.version + ' (Modded)' + (!App ? ('<div id="httpsSwitch" style="cursor:pointer;display:inline-block;background:url(images/' + (Game.https ? 'lockOn' : 'lockOff') + '.png);width:16px;height:16px;position:relative;top:4px;left:0px;margin:0px -2px;"></div>') : '') + (Game.beta ? ' <span style="color:#ff0;">beta</span>' : '');
 
 		if (!App) {
 			if (Game.beta) { var me = l('linkVersionBeta'); me.parentNode.removeChild(me); }
