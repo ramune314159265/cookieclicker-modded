@@ -4287,3 +4287,12 @@ STOP THE FANCY
 	vertical-align: baseline;
 	cursor: default;
 }
+
+
+* {
+	image-rendering: pixelated;
+}
+
+#backgroundLeftCanvas {
+    image-rendering: initial;
+}
