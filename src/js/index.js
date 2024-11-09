@@ -2243,13 +2243,13 @@ Game.Launch = function () {
 		}
 		Game.getTooltip = function (text, origin, isCrate) {
 			origin = (origin ? origin : 'middle');
-			if (isCrate) return 'onMouseOut="Game.setOnCrate(0);Game.tooltip.shouldHide=1;" onMouseOver="if (!Game.mouseDown) {Game.setOnCrate(this);Game.tooltip.dynamic=0;Game.tooltip.draw(this,\'' + escape(text) + '\',\'' + origin + '\');Game.tooltip.wobble();}"';
-			else return 'onMouseOut="Game.tooltip.shouldHide=1;" onMouseOver="Game.tooltip.dynamic=0;Game.tooltip.draw(this,\'' + escape(text) + '\',\'' + origin + '\');Game.tooltip.wobble();"';
+			if (isCrate) return 'onPointerOut="Game.setOnCrate(0);Game.tooltip.shouldHide=1;" onPointerOver="if (!Game.mouseDown) {Game.setOnCrate(this);Game.tooltip.dynamic=0;Game.tooltip.draw(this,\'' + escape(text) + '\',\'' + origin + '\');Game.tooltip.wobble();}"';
+			else return 'onPointerOut="Game.tooltip.shouldHide=1;" onPointerOver="Game.tooltip.dynamic=0;Game.tooltip.draw(this,\'' + escape(text) + '\',\'' + origin + '\');Game.tooltip.wobble();"';
 		}
 		Game.getDynamicTooltip = function (func, origin, isCrate) {
 			origin = (origin ? origin : 'middle');
-			if (isCrate) return 'onMouseOut="Game.setOnCrate(0);Game.tooltip.shouldHide=1;" onMouseOver="if (!Game.mouseDown) {Game.setOnCrate(this);Game.tooltip.dynamic=1;Game.tooltip.draw(this,' + 'function(){return ' + func + '();}' + ',\'' + origin + '\');Game.tooltip.wobble();}"';
-			return 'onMouseOut="Game.tooltip.shouldHide=1;" onMouseOver="Game.tooltip.dynamic=1;Game.tooltip.draw(this,' + 'function(){return ' + func + '();}' + ',\'' + origin + '\');Game.tooltip.wobble();"';
+			if (isCrate) return 'onPointerOut="Game.setOnCrate(0);Game.tooltip.shouldHide=1;" onPointerOver="if (!Game.mouseDown) {Game.setOnCrate(this);Game.tooltip.dynamic=1;Game.tooltip.draw(this,' + 'function(){return ' + func + '();}' + ',\'' + origin + '\');Game.tooltip.wobble();}"';
+			return 'onPointerOut="Game.tooltip.shouldHide=1;" onPointerOver="Game.tooltip.dynamic=1;Game.tooltip.draw(this,' + 'function(){return ' + func + '();}' + ',\'' + origin + '\');Game.tooltip.wobble();"';
 		}
 		Game.attachTooltip = function (el, func, origin) {
 			if (typeof func === 'string') {
@@ -2257,8 +2257,8 @@ Game.Launch = function () {
 				func = function (str) { return function () { return str; }; }(str);
 			}
 			origin = (origin ? origin : 'middle');
-			AddEvent(el, 'mouseover', function (func, el, origin) { return function () { Game.tooltip.dynamic = 1; Game.tooltip.draw(el, func, origin); }; }(func, el, origin));
-			AddEvent(el, 'mouseout', function () { return function () { Game.tooltip.shouldHide = 1; }; }());
+			AddEvent(el, 'pointerover', function (func, el, origin) { return function () { Game.tooltip.dynamic = 1; Game.tooltip.draw(el, func, origin); }; }(func, el, origin));
+			AddEvent(el, 'pointerout', function () { return function () { Game.tooltip.shouldHide = 1; }; }());
 		}
 		Game.tooltip.wobble = function () {
 			//disabled because this effect doesn't look good with the slight slowdown it might or might not be causing.
@@ -3771,7 +3771,7 @@ Game.Launch = function () {
 			var str = '';
 			for (var i in Game.ascensionModes) {
 				var icon = Game.ascensionModes[i].icon;
-				str += '<div class="crate enabled' + (i == Game.nextAscensionMode ? ' highlighted' : '') + '" id="challengeModeSelector' + i + '" style="opacity:1;float:none;display:inline-block;background-position:' + (-icon[0] * 48) + 'px ' + (-icon[1] * 48) + 'px;" ' + Game.clickStr + '="Game.nextAscensionMode=' + i + ';Game.PickAscensionMode();PlaySound(\'sounds/tick.mp3\');Game.choiceSelectorOn=-1;" onMouseOut="l(\'challengeSelectedName\').innerHTML=Game.ascensionModes[Game.nextAscensionMode].dname;l(\'challengeSelectedDesc\').innerHTML=Game.ascensionModes[Game.nextAscensionMode].desc;" onMouseOver="l(\'challengeSelectedName\').innerHTML=Game.ascensionModes[' + i + '].dname;l(\'challengeSelectedDesc\').innerHTML=Game.ascensionModes[' + i + '].desc;"' +
+				str += '<div class="crate enabled' + (i == Game.nextAscensionMode ? ' highlighted' : '') + '" id="challengeModeSelector' + i + '" style="opacity:1;float:none;display:inline-block;background-position:' + (-icon[0] * 48) + 'px ' + (-icon[1] * 48) + 'px;" ' + Game.clickStr + '="Game.nextAscensionMode=' + i + ';Game.PickAscensionMode();PlaySound(\'sounds/tick.mp3\');Game.choiceSelectorOn=-1;" onPointerOut="l(\'challengeSelectedName\').innerHTML=Game.ascensionModes[Game.nextAscensionMode].dname;l(\'challengeSelectedDesc\').innerHTML=Game.ascensionModes[Game.nextAscensionMode].desc;" onPointerOver="l(\'challengeSelectedName\').innerHTML=Game.ascensionModes[' + i + '].dname;l(\'challengeSelectedDesc\').innerHTML=Game.ascensionModes[' + i + '].desc;"' +
 					'></div>';
 			}
 			Game.Prompt('<id PickChallengeMode><h3>' + loc("Select a challenge mode") + '</h3>' +
@@ -4503,13 +4503,13 @@ Game.Launch = function () {
 		Game.mouseDown = 0;
 		if (!Game.touchEvents) {
 			AddEvent(bigCookie, 'click', Game.ClickCookie);
-			AddEvent(bigCookie, 'mousedown', function (event) { Game.BigCookieState = 1; if (Game.prefs.cookiesound) { Game.playCookieClickSound(); } if (event) event.preventDefault(); });
-			AddEvent(bigCookie, 'mouseup', function (event) { Game.BigCookieState = 2; if (event) event.preventDefault(); });
-			AddEvent(bigCookie, 'mouseout', function (event) { Game.BigCookieState = 0; });
-			AddEvent(bigCookie, 'mouseover', function (event) { Game.BigCookieState = 2; });
-			AddEvent(document, 'mousemove', Game.GetMouseCoords);
-			AddEvent(document, 'mousedown', function (event) { Game.lastActivity = Game.time; Game.mouseDown = 1; Game.clickFrom = event.target; });
-			AddEvent(document, 'mouseup', function (event) { Game.lastActivity = Game.time; Game.mouseDown = 0; Game.clickFrom = 0; });
+			AddEvent(bigCookie, 'pointerdown', function (event) { Game.BigCookieState = 1; if (Game.prefs.cookiesound) { Game.playCookieClickSound(); } if (event) event.preventDefault(); });
+			AddEvent(bigCookie, 'pointerup', function (event) { Game.BigCookieState = 2; if (event) event.preventDefault(); });
+			AddEvent(bigCookie, 'pointerout', function (event) { Game.BigCookieState = 0; });
+			AddEvent(bigCookie, 'pointerover', function (event) { Game.BigCookieState = 2; });
+			AddEvent(document, 'pointermove', Game.GetMouseCoords);
+			AddEvent(document, 'pointerdown', function (event) { Game.lastActivity = Game.time; Game.mouseDown = 1; Game.clickFrom = event.target; });
+			AddEvent(document, 'pointerup', function (event) { Game.lastActivity = Game.time; Game.mouseDown = 0; Game.clickFrom = 0; });
 			AddEvent(document, 'click', function (event) { Game.lastActivity = Game.time; Game.Click = 1; Game.lastClickedEl = event.target; Game.clickFrom = 0; });
 			Game.handleScroll = function (e) {
 				if (!e) e = event;
@@ -4525,7 +4525,7 @@ Game.Launch = function () {
 			AddEvent(bigCookie, 'touchstart', function (event) { Game.BigCookieState = 1; if (event) event.preventDefault(); });
 			AddEvent(bigCookie, 'touchend', function (event) { Game.BigCookieState = 0; if (event) event.preventDefault(); });
 			//AddEvent(document,'touchmove',Game.GetMouseCoords);
-			AddEvent(document, 'mousemove', Game.GetMouseCoords);
+			AddEvent(document, 'pointermove', Game.GetMouseCoords);
 			AddEvent(document, 'touchstart', function (event) { Game.lastActivity = Game.time; Game.mouseDown = 1; });
 			AddEvent(document, 'touchend', function (event) { Game.lastActivity = Game.time; Game.mouseDown = 0; });
 			AddEvent(document, 'touchend', function (event) { Game.lastActivity = Game.time; Game.Click = 1; });
@@ -6056,7 +6056,7 @@ Game.Launch = function () {
 						}
 					};
 				}(i));
-				AddEvent(l('langSelect-' + i), 'mouseover', function (lang) {
+				AddEvent(l('langSelect-' + i), 'pointerover', function (lang) {
 					return function () {
 						PlaySound('sounds/smallTick.mp3', 0.75);
 						l('languageSelectHeader').innerHTML = Langs[lang].changeLanguage;
@@ -8669,8 +8669,8 @@ Game.Launch = function () {
 				muteStr += '<div class="tinyProductIcon" id="mutedProduct' + me.id + '" style="display:none;background-position:-' + icon[0] + 'px -' + icon[1] + 'px;" ' + Game.clickStr + '="Game.ObjectsById[' + me.id + '].mute(0);PlaySound(Game.ObjectsById[' + me.id + '].muted?\'sounds/clickOff2.mp3\':\'sounds/clickOn2.mp3\');" ' + Game.getDynamicTooltip('Game.mutedBuildingTooltip(' + me.id + ')', 'this') + '></div>';
 				//muteStr+='<div class="tinyProductIcon" id="mutedProduct'+me.id+'" style="display:none;background-position:-'+icon[0]+'px -'+icon[1]+'px;" '+Game.clickStr+'="Game.ObjectsById['+me.id+'].mute(0);PlaySound(Game.ObjectsById['+me.id+'].muted?\'sounds/clickOff2.mp3\':\'sounds/clickOn2.mp3\');" '+Game.getTooltip('<div style="width:150px;text-align:center;font-size:11px;"><b>Unmute '+me.plural+'</b><br>(Display this building)</div>')+'></div>';
 
-				AddEvent(me.canvas, 'mouseover', function (me) { return function () { me.mouseOn = true; } }(me));
-				AddEvent(me.canvas, 'mouseout', function (me) { return function () { me.mouseOn = false; } }(me));
+				AddEvent(me.canvas, 'pointerover', function (me) { return function () { me.mouseOn = true; } }(me));
+				AddEvent(me.canvas, 'pointerout', function (me) { return function () { me.mouseOn = false; } }(me));
 				AddEvent(me.canvas, 'mousemove', function (me) { return function (e) { var box = this.getBounds(); me.mousePos[0] = e.pageX - box.left; me.mousePos[1] = e.pageY - box.top; } }(me));
 			}
 		}
@@ -8835,7 +8835,7 @@ Game.Launch = function () {
 								var icon = choices[i].icon;
 								var id = choices[i].id;
 								if (choices[i].div) str += '<div class="line"></div>';
-								str += '<div class="crate noFrame enabled' + (id == selected ? ' highlighted' : '') + '" style="opacity:1;float:none;display:inline-block;' + writeIcon(icon) + '" ' + Game.clickStr + '="Game.UpgradesById[' + this.id + '].choicesPick(' + id + ');Game.choiceSelectorOn=-1;Game.UpgradesById[' + this.id + '].buy();" onMouseOut="l(\'choiceSelectedName\').innerHTML=Game.choiceSelectorChoices[Game.choiceSelectorSelected].name;" onMouseOver="l(\'choiceSelectedName\').innerHTML=Game.choiceSelectorChoices[' + i + '].name;"' +
+								str += '<div class="crate noFrame enabled' + (id == selected ? ' highlighted' : '') + '" style="opacity:1;float:none;display:inline-block;' + writeIcon(icon) + '" ' + Game.clickStr + '="Game.UpgradesById[' + this.id + '].choicesPick(' + id + ');Game.choiceSelectorOn=-1;Game.UpgradesById[' + this.id + '].buy();" onPointerOut="l(\'choiceSelectedName\').innerHTML=Game.choiceSelectorChoices[Game.choiceSelectorSelected].name;" onPointerOver="l(\'choiceSelectedName\').innerHTML=Game.choiceSelectorChoices[' + i + '].name;"' +
 									'></div>';
 							}
 						}
@@ -13930,7 +13930,7 @@ Game.Launch = function () {
 			for (var i in Game.dragonAuras) {
 				if (Game.dragonLevel >= parseInt(i) + 4) {
 					var icon = Game.dragonAuras[i].pic;
-					if (i == 0 || i != otherAura) str += '<div class="crate enabled' + (i == Game.SelectingDragonAura ? ' highlighted' : '') + '" style="opacity:1;float:none;display:inline-block;' + writeIcon(icon) + '" ' + Game.clickStr + '="PlaySound(\'sounds/tick.mp3\');Game.SetDragonAura(' + i + ',' + slot + ');" onMouseOut="Game.DescribeDragonAura(' + Game.SelectingDragonAura + ');" onMouseOver="Game.DescribeDragonAura(' + i + ');"' +
+					if (i == 0 || i != otherAura) str += '<div class="crate enabled' + (i == Game.SelectingDragonAura ? ' highlighted' : '') + '" style="opacity:1;float:none;display:inline-block;' + writeIcon(icon) + '" ' + Game.clickStr + '="PlaySound(\'sounds/tick.mp3\');Game.SetDragonAura(' + i + ',' + slot + ');" onPointerOut="Game.DescribeDragonAura(' + Game.SelectingDragonAura + ');" onPointerOver="Game.DescribeDragonAura(' + i + ');"' +
 						'></div>';
 				}
 			}
@@ -15773,7 +15773,7 @@ window.onload = function () {
 			for (var i in Langs) {
 				var lang = Langs[i];
 				AddEvent(l('langSelect-' + i), 'click', function (lang) { return function () { callback(lang); }; }(i));
-				AddEvent(l('langSelect-' + i), 'mouseover', function (lang) { return function () { PlaySound('sounds/smallTick.mp3', 0.75); l('languageSelectHeader').innerHTML = Langs[lang].changeLanguage; }; }(i));
+				AddEvent(l('langSelect-' + i), 'pointerover', function (lang) { return function () { PlaySound('sounds/smallTick.mp3', 0.75); l('languageSelectHeader').innerHTML = Langs[lang].changeLanguage; }; }(i));
 			}
 		}
 

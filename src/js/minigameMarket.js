@@ -582,10 +582,10 @@ M.launch=function()
 			me.viewHideL=l('bankGood-'+me.id+'-viewHide');
 			me.graphIconL=l('bankGood-'+me.id+'-graphIcon');
 
-			AddEvent(l('bankGood-'+i),'mouseover',function(i){return function(e){
+			AddEvent(l('bankGood-'+i),'pointerover',function(i){return function(e){
 				if (M.hoverOnGood!=i) {M.hoverOnGood=i;M.toRedraw=2;}
 			}}(i));
-			AddEvent(l('bankGood-'+i),'mouseout',function(i){return function(e){
+			AddEvent(l('bankGood-'+i),'pointerout',function(i){return function(e){
 				if (M.hoverOnGood==i) {M.hoverOnGood=-1;M.toRedraw=2;}
 			}}(i));
 
@@ -685,7 +685,7 @@ M.launch=function()
 				M.toRedraw=2;
 			}
 		});
-		AddEvent(M.graph,'mouseout',function(e){
+		AddEvent(M.graph,'pointerout',function(e){
 			M.graph.style.cursor='auto';
 			if (M.hoverOnGood!=-1) {M.hoverOnGood=-1;M.toRedraw=2;}
 			Game.tooltip.shouldHide=1;

@@ -401,17 +401,22 @@ M.launch=function()
 		for (var i in M.gods)
 		{
 			var me=M.gods[i];
-			AddEvent(l('templeGodDrag'+me.id),'mousedown',function(what){return function(e){if (e.button==0){M.dragGod(what);}}}(me));
-			AddEvent(l('templeGodDrag'+me.id),'mouseup',function(what){return function(e){if (e.button==0){M.dropGod(what);}}}(me));
+			AddEvent(l('templeGodDrag'+me.id),'pointerdown',function(what){return function(e){if (e.button==0){M.dragGod(what);}}}(me));
+			AddEvent(l('templeGodDrag'+me.id),'pointerup',function(what){return function(e){if (e.button==0){M.dropGod(what);}}}(me));
+			AddEvent(l('templeGodDrag'+me.id),'touchmove',function(e){
+				if(M.dragging){
+					e.preventDefault()
+				}
+			});
 		}
 		for (var i in M.slot)
 		{
 			var me=M.slot[i];
-			AddEvent(l('templeSlot'+i),'mouseover',function(what){return function(){M.hoverSlot(what);}}(i));
-			AddEvent(l('templeSlot'+i),'mouseout',function(what){return function(e){if (e.button==0){M.hoverSlot(-1);}}}(i));
+			AddEvent(l('templeSlot'+i),'pointerover',function(what){return function(){M.hoverSlot(what);}}(i));
+			AddEvent(l('templeSlot'+i),'pointerout',function(what){return function(e){if (e.button==0){M.hoverSlot(-1);}}}(i));
 		}
 
-		AddEvent(document,'mouseup',M.dropGod);
+		AddEvent(document,'pointerup',M.dropGod);
 
 
 		M.refillTooltip=function(){

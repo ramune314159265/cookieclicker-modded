@@ -1308,8 +1308,8 @@ M.launch=function()
 						else {it.l.classList.remove('on');}
 					}
 				}}(me));
-				AddEvent(me.l,'mouseover',M.hideCursor);
-				AddEvent(me.l,'mouseout',M.showCursor);
+				AddEvent(me.l,'pointerover',M.hideCursor);
+				AddEvent(me.l,'pointerout',M.showCursor);
 				if (me.unlocked) me.l.classList.remove('locked');
 			}
 
@@ -1328,8 +1328,8 @@ M.launch=function()
 			{
 				var me=M.tools[i];
 				AddEvent(l('gardenTool-'+me.id),'click',me.func);
-				AddEvent(l('gardenTool-'+me.id),'mouseover',M.hideCursor);
-				AddEvent(l('gardenTool-'+me.id),'mouseout',M.showCursor);
+				AddEvent(l('gardenTool-'+me.id),'pointerover',M.hideCursor);
+				AddEvent(l('gardenTool-'+me.id),'pointerout',M.showCursor);
 			}
 
 			var str='';
@@ -1353,8 +1353,8 @@ M.launch=function()
 					M.toCompute=true;M.soil=me.id;M.computeStepT();
 					for (var i in M.soils){var it=M.soils[i];if (it.id==M.soil){l('gardenSoil-'+it.id).classList.add('on');}else{l('gardenSoil-'+it.id).classList.remove('on');}}
 				}}(me));
-				AddEvent(l('gardenSoil-'+me.id),'mouseover',M.hideCursor);
-				AddEvent(l('gardenSoil-'+me.id),'mouseout',M.showCursor);
+				AddEvent(l('gardenSoil-'+me.id),'pointerover',M.hideCursor);
+				AddEvent(l('gardenSoil-'+me.id),'pointerout',M.showCursor);
 			}
 
 			M.cursorL=l('gardenCursor');
