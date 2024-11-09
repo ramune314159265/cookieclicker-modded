@@ -4290,6 +4290,7 @@ STOP THE FANCY
 
 
 * {
+	touch-action: manipulation;
 	image-rendering: pixelated;
 }
 
